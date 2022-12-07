@@ -1,0 +1,23 @@
+{
+  "name": "match_reservation_system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gaserashraf/Match-Reservation-System.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gaserashraf/Match-Reservation-System/issues"
+  },
+  "homepage": "https://github.com/gaserashraf/Match-Reservation-System#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^6.8.0"
+  }
+}
