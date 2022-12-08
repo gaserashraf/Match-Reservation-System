@@ -22,7 +22,7 @@ const Navbar = () => {
   );
 
   return (
-    <nav class="navbar navbar-expand-lg navbar-light bg-light justify-content-between">
+    <nav class="navbar navbar-expand-lg navbar-light justify-content-between">
       <h1>
         <i className="fas fa-trophy mr-1"></i>
         Qatar 2022
