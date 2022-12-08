@@ -1,9 +1,7 @@
-import React from 'react'
-
+import React from "react";
+import MangerView from "../manger/MangerView";
 const Home = () => {
-  return (
-    <div>Home</div>
-  )
-}
+  return <MangerView />;
+};
 
-export default Home
+export default Home;
