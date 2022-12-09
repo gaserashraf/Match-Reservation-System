@@ -6,6 +6,7 @@ const Navbar = () => {
   const [mobileView, setMobileView] = useState(false);
 
   const toogleMobileIcon = () => setMobileView(!mobileView);
+
   const gusetLinks = (
     <>
       <li className="nav-item">
@@ -29,6 +30,29 @@ const Navbar = () => {
     </>
   );
 
+  const authLinks = (
+    <>
+      <li className="nav-item">
+        <Link
+          className="nav-links"
+          to="/register"
+          onClick={() => setMobileView(false)}
+        >
+          Edit Profile
+        </Link>
+      </li>
+      <li className="nav-item">
+        <Link
+          className="nav-links"
+          to="/login"
+          onClick={() => setMobileView(false)}
+        >
+          Logout
+        </Link>
+      </li>
+    </>
+  );
+  let Auth = false;
   return (
     <nav class="navbar navbar-expand-lg navbar-light justify-content-between">
       <h1>
@@ -46,8 +70,8 @@ const Navbar = () => {
             }`}
           />
         </button>
-        <ul className={(mobileView ? "nav-menu active" : "nav-menu")+" mb-0"}>
-          {gusetLinks}
+        <ul className={(mobileView ? "nav-menu active" : "nav-menu") + " mb-0"}>
+          {Auth ? authLinks : gusetLinks}
         </ul>
       </div>
     </nav>

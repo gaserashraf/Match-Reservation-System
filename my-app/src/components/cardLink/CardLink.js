@@ -4,7 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import { Link } from "react-router-dom";
-const NewCurrentUsersCard = ({ title, description, link }) => {
+const CardLink = ({ title, description, link }) => {
   return (
     <Link to={link}>
       <Card sx={{ width: 345 }}>
@@ -24,4 +24,4 @@ const NewCurrentUsersCard = ({ title, description, link }) => {
   );
 };
 
-export default NewCurrentUsersCard;
+export default CardLink;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import UserCard from "./UserCard";
 const NewUsers = () => {
@@ -49,6 +49,9 @@ const NewUsers = () => {
           birthday: "1-11-2000",
         },
       ];
+      useEffect(() => {
+        console.log("new users");
+      }, []);
       return <div className="row mt-2">
         {users.map((user) => {
             return <div className="col-12 col-md-6 col-lg-4 mb-2">
