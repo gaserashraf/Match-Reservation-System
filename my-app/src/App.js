@@ -9,7 +9,7 @@ import Login from "./components/auth/Login";
 import NotFound from "./components/notFound/NotFound";
 import NewUsers from "./components/administrator/NewUsers";
 import CurrentUsers from "./components/administrator/CurrentUsers";
-
+import MangerView from "./components/administrator/MangerView";
 function App() {
   return (
     <div className="App">
@@ -19,7 +19,9 @@ function App() {
         <div className="container">
           <Routes>
             {/* <PrivateRoute exact path="/" element={Home} /> */}
-            <Route path="administrator" element={<Home />} />
+            <Route path="/" element={<Home />} />
+
+            <Route path="administrator" element={ <MangerView />} />
             <Route path="administrator/newusers" element={<NewUsers />} />
             <Route path="administrator/currentusers" element={<CurrentUsers />} />
             <Route exact path="register" element={<Register />} />

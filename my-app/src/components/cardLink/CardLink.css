@@ -1,0 +1,5 @@
+@media (max-width: 780px) {
+    .w-sm-100 {
+        width: 100% !important;
+    }
+  }

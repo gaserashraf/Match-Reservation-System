@@ -4,12 +4,13 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import { Link } from "react-router-dom";
-const CardLink = ({ title, description, link }) => {
+import "./CardLink.css";
+const CardLink = ({ title, description, link, icon }) => {
   return (
-    <Link to={link}>
-      <Card sx={{ width: 345 }}>
+    <Link to={link} className="mb-2 mr-0 mr-md-2 w-sm-100">
+      <Card sx={{ width: 345, margin: 0 }} className="w-sm-100">
         <CardActionArea className="py-5" style={{ backgroundColor: "#f0f0f0" }}>
-          <i class="fas fa-users" style={{ fontSize: 30 }}></i>
+          <i class={icon} style={{ fontSize: 50 }}></i>
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
               {title}
