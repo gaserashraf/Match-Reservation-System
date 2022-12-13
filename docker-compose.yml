@@ -14,42 +14,60 @@ services:
     - POSTGRES_NAME=$POSTGRES_NAME
     volumes:
         - ./db/data:/var/lib/postgresql/data
+        # - ./db:/docker-entrypoint-initdb.d
+    networks:
+      - app
   service:
     container_name: backend
     restart: unless-stopped
     env_file: ./.env
     environment:
-      NODE_ENV: production
       DB_HOST: db
       DB_PORT: 5432
       DB_USER: $POSTGRES_USER
       DB_PASSWORD: $POSTGRES_PASSWORD
       DB_NAME: $POSTGRES_NAME
     build:
-        context: ./service
-        dockerfile: Dockerfile
+      args:
+        user: sammy
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: app
+    working_dir: /var/www/
     volumes:
-        - /app/node_modules
-        - ./service/config:/app/config
-        - ./service/src:/app/src
-        - ./service/test:/app/test
+      - ./:/var/www
+    networks:
+      - app
     ports:
         - "3000:3000"
     depends_on:
       - db
     stdin_open: true
     tty: true
-  frontend:
-    container_name: frontend
-    restart: unless-stopped
-    build:
-        context: ./frontend
-        dockerfile: Dockerfile.dev
-    volumes:
-        - /app/node_modules
-        - ./frontend:/app
-    ports:
-        - "8080:8080"
-  # volumes:
-  #   db:
-  #     driver: local
+  # frontend:
+  #   container_name: frontend
+  #   restart: unless-stopped
+  #   build:
+  #       context: ./frontend
+  #       dockerfile: Dockerfile.dev
+  #   volumes:
+  #       - /app/node_modules
+  #       - ./frontend:/app
+  #   ports:
+  #       - "8080:8080"
+  nginx:
+      image: nginx:alpine
+      container_name: app-nginx
+      restart: unless-stopped
+      ports:
+        - 8000:80
+      volumes:
+        - ./:/var/www
+        - ./nginx:/etc/nginx/conf.d/
+      networks:
+        - app
+
+networks:
+  app:
+    driver: bridge
