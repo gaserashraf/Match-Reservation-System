@@ -41,9 +41,9 @@ RUN php artisan view:cache      # RUN php artisan passport:install
 # COPY ./BroadcastNotificationCreated.php /backend/vendor/laravel/framework/src/Illuminate/Notifications/Events/BroadcastNotificationCreated.php
 # COPY ./RefreshDatabase.php /backend/vendor/laravel/framework/src/Illuminate/Foundation/Testing/RefreshDatabase.php
 
+EXPOSE 8181
+
 RUN chmod +x backend_start.sh
 
 CMD ./backend_start.sh
-
-EXPOSE 8181
 
