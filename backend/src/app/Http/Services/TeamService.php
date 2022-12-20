@@ -4,6 +4,7 @@ namespace App\Http\Services;
 
 use App\Models\Team;
 use Illuminate\Support\Facades\DB;
+use App\Http\Misc\Helpers\ProccessStrings;
 
 class TeamService
 {
@@ -17,6 +18,7 @@ class TeamService
     if (!$team_name) {
       return null;
     }
+    $team_name = ProccessStrings::trim_replace_lower($team_name);
     DB::beginTransaction();
     try {
       $team = Team::create([
@@ -40,6 +42,7 @@ class TeamService
     if (!$team_name) {
       return false;
     }
+    $team_name = ProccessStrings::trim_replace_lower($team_name);
     DB::beginTransaction();
     try {
       $team = Team::where('team_name', $team_name)->first();

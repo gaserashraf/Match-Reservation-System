@@ -18,7 +18,6 @@ class TeamController extends Controller
   public function createTeam(TeamCreationRequest $request)
   {
     $team_name = $request->input('team_name');
-    $team_name = trim($team_name)->replace(' ', '-');
     $team = (new TeamService())->createTeam($team_name);
     if (!$team) {
       return $this->errorResponse('Team creation failed', 400);
@@ -36,7 +35,6 @@ class TeamController extends Controller
   public function deleteTeam(TeamDeletionRequest $request)
   {
     $team_name = $request->input('team_name');
-    $team_name = trim($team_name)->replace(' ', '-');
     $team = (new TeamService())->deleteTeam($team_name);
     if (!$team) {
       return $this->errorResponse('Team deletion failed', 400);

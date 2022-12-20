@@ -40,7 +40,6 @@ class AllowUserRequest extends FormRequest
     return [
       'username' => [
         'required',
-        'regex:/^[a-zA-Z0-9-]+$/u',
         'exists:users,username',
       ],
     ];

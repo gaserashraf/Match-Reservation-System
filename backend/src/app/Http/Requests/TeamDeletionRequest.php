@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Misc\Helpers\ProccessStrings;
 
 class TeamDeletionRequest extends FormRequest
 {
@@ -20,7 +21,10 @@ class TeamDeletionRequest extends FormRequest
   public function all($keys = null)
   {
     $data = parent::all($keys);
-    $data['team_name'] = trim($data['team_name'])->replace(' ', '-');
+
+    $team_name = ProccessStrings::trim_replace_lower($this->route('team_name'));
+    $data['team_name'] = $team_name;
+
     return $data;
   }
   /**
@@ -33,8 +37,6 @@ class TeamDeletionRequest extends FormRequest
     return [
       'team_name' => [
         'required',
-        'regex:/^[a-zA-Z-]+$/',
-        'max:255',
         'exists:teams,team_name',
       ],
     ];

@@ -41,9 +41,14 @@ Route::group(['prefix' => 'admin'], function () {
 
 
 /*
- * Team Routes 
+ * Manager Specific Routes 
  */
-Route::group(['prefix' => 'team', 'middleware' => ['auth:api', 'verified', 'role:1']], function () {
-  Route::post('/team/create', [TeamController::class, 'createTeam'])->name('team.create');
-  Route::delete('/team/delete/{team_name}', [TeamController::class, 'deleteTeam'])->name('team.delete');
+Route::group(['middleware' => ['auth:api', 'verified', 'role:1']], function () {
+
+  // Team Routes
+  Route::group(['prefix' => 'team'], function () {
+    Route::post('create', [TeamController::class, 'createTeam'])->name('team.create');
+    Route::delete('delete/{team_name}', [TeamController::class, 'deleteTeam'])->name('team.delete');
+  });
+
 });
