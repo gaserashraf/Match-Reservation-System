@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\TeamController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,3 +40,10 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 
+/*
+ * Team Routes 
+ */
+Route::group(['prefix' => 'team', 'middleware' => ['auth:api', 'verified', 'role:1']], function () {
+  Route::post('/team/create', [TeamController::class, 'createTeam'])->name('team.create');
+  Route::delete('/team/delete/{team_name}', [TeamController::class, 'deleteTeam'])->name('team.delete');
+});
