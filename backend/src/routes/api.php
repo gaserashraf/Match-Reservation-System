@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\StadiumController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,4 +52,9 @@ Route::group(['middleware' => ['auth:api', 'verified', 'role:1']], function () {
     Route::delete('delete/{team_name}', [TeamController::class, 'deleteTeam'])->name('team.delete');
   });
 
+  // Stadium Routes
+  Route::group(['prefix' => 'stadium'], function () {
+    Route::post('create', [StadiumController::class, 'createStadium'])->name('stadium.create');
+    Route::delete('delete/{stadium_name}', [StadiumController::class, 'deleteStadium'])->name('stadium.delete');
+  });
 });
