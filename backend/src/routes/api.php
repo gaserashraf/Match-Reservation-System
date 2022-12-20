@@ -16,7 +16,7 @@ use App\Http\Controllers\AdminController;
 */
 
 /*
- * User Routes 
+ * General User Routes 
  */
 
 Route::post('/register', [UserController::class, 'register'])->name('register');
@@ -25,10 +25,17 @@ Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
 
 /*
- * Adimn Routes 
+ * Adimn Specific Routes 
  */
-// Route::post('/admin/register', [UserController::class, 'adminRegister'])->name('admin.register');
-// Route::post('/admin/login', [UserController::class, 'adminLogin'])->name('admin.login');
-// Route::post('/admin/logout', [UserController::class, 'adminLogout'])->name('admin.logout');
-Route::put('/admin/allow/{username}', [AdminController::class, 'allowUser'])->name('admin.allow')->middleware('auth:api');
+Route::group(['prefix' => 'admin'], function () {
+  // Route::post('/register', [AdminController::class, 'register'])->name('admin.register');
+  // Route::post('/login', [AdminController::class, 'login'])->name('admin.login');
+  // Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
+
+  Route::group(['middleware' => ['auth:api', 'role:0']], function () {
+    Route::put('/allow/{username}', [AdminController::class, 'allowUser'])->name('admin.allow');
+    Route::delete('/delete/{username}', [AdminController::class, 'deleteUser'])->name('admin.delete');
+  });
+});
+
 

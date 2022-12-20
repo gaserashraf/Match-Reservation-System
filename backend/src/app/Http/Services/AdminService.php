@@ -3,7 +3,6 @@
 namespace App\Http\Services;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
 class AdminService
 {
@@ -22,11 +21,27 @@ class AdminService
     if (!$user) {
       return false;
     }
-    if (Auth::user()->role === 0) {
-      $user->allowed = $allow;
-      $user->save();
-      return true;
+    $user->allowed = $allow;
+    $user->save();
+    return true;
+  }
+
+
+  /**
+   * for admins (role = 0) only to delete a user
+   * @param User $user
+   * @return bool
+   */
+  public function deleteUser(string $username): bool
+  {
+    if (!$username) {
+      return false;
     }
-    return false;
+    $user = User::where('username', $username)->first();
+    if (!$user) {
+      return false;
+    }
+    $user->delete();
+    return true;
   }
 }
