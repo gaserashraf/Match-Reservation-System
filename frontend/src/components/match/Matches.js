@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import AddMatchFrom from "./AddMatchForm";
 import MatchCard from "./MatchCard";
+import { AlertContext } from "../../contexts/AlertContext";
 const Matches = () => {
+  const alertContext = useContext(AlertContext);
+
   const AddMatchModal = {
     position: "absolute",
     top: "50%",
@@ -15,47 +18,59 @@ const Matches = () => {
     boxShadow: 24,
     p: 4,
   };
+  const [editMatch, setEditMatch] = useState(null);
+
   const [openAddStadium, setOpenAddStadium] = React.useState(false);
   const handleOpen = () => setOpenAddStadium(true);
-  const handleClose = () => setOpenAddStadium(false);
+  const handleClose = () => {
+    setOpenAddStadium(false);
+    setEditMatch(null);
+  };
 
   let matchsArr = [
     {
+      id: 1,
       team1: "Qatar",
       team2: "Ecuador",
-      stadium: "Al Bayt Stadium",
+      stadium: "Stadium1",
       mainReferee: "Mohamed",
-      linesman1: "Ahmed",
-      linesman2: "Ali",
+      lineReferee1: "Ahmed",
+      lineReferee2: "Ali",
       dateAndTime: "2022-08-18T21:11:54",
     },
     {
+      id: 2,
       team1: "Qatar",
       team2: "Ecuador",
-      stadium: "Al Bayt Stadium",
+      stadium: "Stadium2",
       mainReferee: "Mohamed",
-      linesman1: "Ahmed",
-      linesman2: "Ali",
+      lineReferee1: "Ahmed",
+      lineReferee2: "Ali",
       dateAndTime: "2022-08-18T21:11:54",
     },
     {
+      id: 3,
       team1: "Qatar",
       team2: "Ecuador",
-      stadium: "Al Bayt Stadium",
+      stadium: "Stadium3",
       mainReferee: "Mohamed",
-      linesman1: "Ahmed",
-      linesman2: "Ali",
+      lineReferee1: "Ahmed",
+      lineReferee2: "Ali",
       dateAndTime: "2022-08-18T21:11:54",
     },
   ];
   const [matchs, setMatchs] = useState(matchsArr);
   const handleDelete = (match) => {
-    console.log(match);
-    setMatchs(matchs.filter((m) => m !== match));
+    //console.log(match);
+
+    setMatchs(matchs.filter((m) => m.id !== match.id));
+    alertContext.setAlert("Match Deleted Successfully", "success");
   };
 
   const handleEdit = (match) => {
-    console.log(match);
+    //console.log(match);
+    setEditMatch(match);
+    setOpenAddStadium(true);
   };
   return (
     <div>
@@ -76,6 +91,7 @@ const Matches = () => {
                 onClose={handleClose}
                 setMatchs={setMatchs}
                 matchs={matchs}
+                editMatch={editMatch}
               />
             </Box>
           </Modal>
@@ -86,6 +102,8 @@ const Matches = () => {
           return (
             <div className="col-12 col-md-6 col-lg-4 mb-2">
               <MatchCard
+                key={match.id}
+                id={match.id}
                 team1={match.team1}
                 team2={match.team2}
                 stadium={match.stadium}

@@ -2,11 +2,11 @@ import React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
-import CardHeader from "@mui/material/CardHeader";
-import IconButton, { IconButtonProps } from "@mui/material/IconButton";
+import IconButton from "@mui/material/IconButton";
 import flag from "./flag.png";
+import { Link } from "react-router-dom";
 const MatchCard = ({
+  id,
   team1,
   team2,
   stadium,
@@ -56,11 +56,17 @@ const MatchCard = ({
             ></i>
           </IconButton>
         </>
-
+        <Link to={`/matchs/${id}`}>
+          <button className="btn btn-outline-dark">View Match</button>
+        </Link>
         <CardContent className="pb-0">
           <div className="row">
             <div className="col-4">
-              <Typography variant="h5" component="div" style={{fontSize:"20px"}}>
+              <Typography
+                variant="h5"
+                component="div"
+                style={{ fontSize: "20px" }}
+              >
                 <div>
                   <img src={flag} alt="flag" className="w-100" />
                 </div>
@@ -80,7 +86,11 @@ const MatchCard = ({
               </Typography>
             </div>
             <div className="col-4">
-              <Typography variant="h5" component="div" style={{fontSize:"20px"}}>
+              <Typography
+                variant="h5"
+                component="div"
+                style={{ fontSize: "20px" }}
+              >
                 <div>
                   <img src={flag} alt="flag" className="w-100" />
                 </div>
@@ -88,8 +98,14 @@ const MatchCard = ({
               </Typography>
             </div>
           </div>
-          <div className="row justify-content-center">{stadium}</div>
-          <div className="row justify-content-center">{mainReferee}</div>
+          <div className="row justify-content-center align-items-center">
+            <i className="fas fa-ticket-alt mr-2"></i>
+            {stadium}
+          </div>
+          <div className="row justify-content-center align-items-center">
+            <i className="fas fa-flag mr-2"></i>
+            {mainReferee}
+          </div>
         </CardContent>
       </CardContent>
     </Card>

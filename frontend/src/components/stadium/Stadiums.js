@@ -21,26 +21,31 @@ const Stadiums = () => {
 
   const stadiumsArr = [
     {
+      id: 1,
       name: "Al Bayt Stadium",
       rows: 10,
       seatsPerRow: 10,
     },
     {
+      id: 2,
       name: "Al Janoub Stadium",
       rows: 10,
       seatsPerRow: 9,
     },
     {
+      id: 3,
       name: "Al Wakrah Stadium",
       rows: 5,
       seatsPerRow: 10,
     },
     {
+      id: 4,
       name: "Al Bayt Stadium",
       rows: 10,
       seatsPerRow: 10,
     },
     {
+      id: 5,
       name: "Al Janoub Stadium",
       rows: 10,
       seatsPerRow: 9,
@@ -76,6 +81,8 @@ const Stadiums = () => {
           return (
             <div className="col-12 col-md-6 col-lg-4 mb-2">
               <StadiumCard
+                key={stadium.id}
+                id={stadium.id}
                 name={stadium.name}
                 numberOfSeats={(stadium.rows * stadium.seatsPerRow)}
               />

@@ -16,6 +16,7 @@ import RequireAuth from "./routing/ProtectedRoutes";
 import CustomAlert from "./components/alert/CustomAlert";
 import Stadiums from "./components/stadium/Stadiums";
 import Matches from "./components/match/Matches";
+import Match from "./components/match/Match";
 function App() {
   return (
     <div className="App">
@@ -37,7 +38,7 @@ function App() {
 
                   <Route path="/stadiums" element={<Stadiums />} />
                   <Route path="/matchs" element={<Matches />} />
-
+                  <Route path="/matchs/:id" element={<Match />} />
                 </Route>
                 <Route exact path="register" element={<Register />} />
                 <Route exact path="login" element={<Login />} />
