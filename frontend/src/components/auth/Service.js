@@ -1,27 +1,12 @@
-export const handleRegister = (
-  firstName,
-  lastName,
-  email,
-  username,
-  password,
-  country,
-  date,
-  gender,
-  role
-) => {
-  console.log(
-    firstName,
-    lastName,
-    email,
-    username,
-    password,
-    country,
-    date,
-    gender,
-    role
-  );
+export const handleRegister = (user) => {
+  console.log(user);
 };
 
 export const handleLogin = (email, password) => {
   console.log(email, password);
+};
+
+export const handleUpdateProfile = (user) => {
+  console.log(user);
+  return 1;
 };

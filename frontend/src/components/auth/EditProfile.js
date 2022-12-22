@@ -8,70 +8,52 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
-import { handleRegister } from "./Service";
-import { Link } from "react-router-dom";
+import { handleUpdateProfile } from "./Service";
 import { AlertContext } from "../../contexts/AlertContext";
-const Register = () => {
+const EditProfile = (props) => {
   const alertContext = useContext(AlertContext);
-  const [firstName, setFirstName] = React.useState("");
-  const [lastName, setLastName] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [username, setUsername] = React.useState("");
+  const [firstName, setFirstName] = React.useState("gaser");
+  const [lastName, setLastName] = React.useState("ashraf");
+  const [email, setEmail] = React.useState("gaser@gmail.com");
+  const [username, setUsername] = React.useState("gaserashraf");
   const [password, setPassword] = React.useState("");
-  const [country, setCountry] = React.useState("");
+  const [country, setCountry] = React.useState("egypt");
 
   const [date, setDate] = React.useState(new Date("2022-03-25"));
   const handleChangeDate = (newValue) => {
     setDate(newValue);
   };
-  const [gender, setGender] = React.useState("");
+  const [gender, setGender] = React.useState("male");
   const handleChangeGender = (event) => {
     setGender(event.target.value);
   };
-  const [role, setRole] = React.useState("");
+  const [role, setRole] = React.useState("fan");
   const handleChangeRole = (event) => {
     setRole(event.target.value);
   };
-
   const onSubmit = () => {
-    if (
-      firstName === "" ||
-      lastName === "" ||
-      email === "" ||
-      username === "" ||
-      password === "" ||
-      date === "" ||
-      gender === "" ||
-      role === "" ||
-      country === ""
-    ) {
-      alertContext.setAlert(
-        "Please fill all the fields",
-        "fas fa-times",
-        "error"
-      );
-      return;
-    }
-    let user = {
+    const user = {
       firstName,
       lastName,
       email,
       username,
       password,
       country,
-      date,
-      gender,
-      role,
     };
-    handleRegister(user);
+    if (handleUpdateProfile(user)) {
+      alertContext.setAlert("Profile updated successfully", "success");
+      
+    } else {
+      alertContext.setAlert("Profile updated failed", "error");
+    }
+    props.onClose();
   };
-
   return (
     <div>
       <div>
-        <h1 className="text-center mb-2">Register</h1>
+        <h1 className="text-center mb-2">Edit Profile</h1>
         <div className="row justify-content-center mb-2">
-          <div className="col-md-6">
+          <div className="col-md-12">
             <TextField
               required
               id="filled-required"
@@ -85,7 +67,7 @@ const Register = () => {
           </div>
         </div>
         <div className="row justify-content-center mb-2">
-          <div className="col-md-6">
+          <div className="col-md-12">
             <TextField
               required
               id="filled-required"
@@ -98,8 +80,9 @@ const Register = () => {
           </div>
         </div>
         <div className="row justify-content-center mb-2">
-          <div className="col-md-6">
+          <div className="col-md-12">
             <TextField
+              disabled
               required
               id="filled-required"
               label="Email"
@@ -112,8 +95,9 @@ const Register = () => {
           </div>
         </div>
         <div className="row justify-content-center mb-2">
-          <div className="col-md-6">
+          <div className="col-md-12">
             <TextField
+              disabled
               required
               id="filled-required"
               label="Username"
@@ -126,7 +110,7 @@ const Register = () => {
         </div>
 
         <div className="row justify-content-center mb-2">
-          <div className="col-md-6">
+          <div className="col-md-12">
             <TextField
               required
               id="filled-password-input"
@@ -142,7 +126,7 @@ const Register = () => {
         </div>
 
         <div className="row justify-content-center mb-2">
-          <div className="col-md-6">
+          <div className="col-md-12">
             <TextField
               label="Nationality"
               variant="filled"
@@ -153,7 +137,7 @@ const Register = () => {
           </div>
         </div>
         <div className="row justify-content-center mb-2">
-          <div className="col-md-6 d-flex justify-content-between">
+          <div className="col-md-12 d-flex justify-content-between">
             <div className="col-md-4 p-0">
               <LocalizationProvider dateAdapter={AdapterMoment}>
                 <DesktopDatePicker
@@ -184,6 +168,7 @@ const Register = () => {
               <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Role</InputLabel>
                 <Select
+                  disabled
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   value={role}
@@ -198,20 +183,15 @@ const Register = () => {
           </div>
         </div>
         <div className="row justify-content-center mb-2">
-          <div className="col-md-6">
+          <div className="col-md-12">
             <Button
               variant="outlined"
               size="large"
               sx={{ width: "100%" }}
               onClick={onSubmit}
             >
-              Sign Up
+              Update Profile
             </Button>
-          </div>
-        </div>
-        <div className="row justify-content-center mb-2">
-          <div className="col-md-6">
-            Already have an account? <Link to="/login">Login</Link>
           </div>
         </div>
       </div>
@@ -219,4 +199,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default EditProfile;

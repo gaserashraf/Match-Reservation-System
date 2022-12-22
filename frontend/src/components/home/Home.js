@@ -6,7 +6,7 @@ import CardLink from "../cardLink/CardLink";const Home = () => {
       <div className="row justify-content-center">
         <div className="col-md-12 d-flex flex-wrap justify-content-between">
           <CardLink title="Matches" link="Matchs" icon="far fa-futbol" />
-          <CardLink title="Stadiums" link="Matchs" icon="fab fa-usps" />
+          <CardLink title="Stadiums" link="stadiums" icon="fab fa-usps" />
           <CardLink title="Tickets" link="Tickets" icon="fas fa-ticket-alt"/>
 
         </div>

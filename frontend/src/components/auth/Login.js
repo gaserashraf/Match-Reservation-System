@@ -1,19 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { handleLogin } from "./Service";
-import CustomAlert from "../alert/CustomAlert";
 import { Link } from "react-router-dom";
+import { AlertContext } from "../../contexts/AlertContext";
 const Login = () => {
+  const alertContext = useContext(AlertContext);
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
 
-  const [openAlert, setOpenAlert] = React.useState(false);
-  const [msg, setMsg] = React.useState("");
   const onSubmit = () => {
     if (email === "" || password === "") {
-      setMsg("Please fill all the fields");
-      setOpenAlert(true);
+      alertContext.setAlert(
+        "Please fill all the fields",
+        "fas fa-times",
+        "error"
+      );
+
       return;
     }
     handleLogin(email, password);
@@ -23,11 +26,6 @@ const Login = () => {
     <div>
       <div>
         <h1 className="text-center mb-2">Login</h1>
-        <div className="row justify-content-center mb-2">
-          <div className="col-md-6">
-            <CustomAlert open={openAlert} setOpen={setOpenAlert} msg={msg} />
-          </div>
-        </div>
         <div className="row justify-content-center mb-2">
           <div className="col-md-6">
             <TextField

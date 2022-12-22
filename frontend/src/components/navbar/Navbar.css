@@ -5,6 +5,15 @@ a:active {
   text-decoration: inherit;
   color: inherit;
 }
+button,
+button:active,
+button:focus {
+  outline: none;
+  outline: none;
+  box-shadow: none;
+  
+}
+
 .navbar {
   height: 80px;
   display: flex;
@@ -84,7 +93,9 @@ a:active {
   .NavbarItems {
     position: relative;
   }
-
+  .headingNav {
+    display: none;
+  }
   .nav-menu {
     display: flex;
     flex-direction: column;
