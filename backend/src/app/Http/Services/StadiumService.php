@@ -17,14 +17,14 @@ class StadiumService
    * @param string $stadium_max_capacity
    * @return Stadium
    */
-  public function createStadium(string $stadium_name, int $number_of_rows, int $number_of_seats_per_row): ?Stadium
+  public function addStadium(string $stadium_name, int $number_of_rows, int $number_of_seats_per_row): ?Stadium
   {
     if (!$stadium_name || !$stadium_shape || !$stadium_max_capacity) {
       return null;
     }
     $stadium_name = ProccessStrings::trim_replace_lower($stadium_name);
-    DB::beginTransaction();
     try {
+      DB::beginTransaction();
       $stadium = Stadium::create([
         'stadium_name' => $stadium_name,
         'number_of_rows' => $number_of_rows,
@@ -50,8 +50,8 @@ class StadiumService
       return null;
     }
     $stadium_name = ProccessStrings::trim_replace_lower($stadium_name);
-    DB::beginTransaction();
     try {
+      DB::beginTransaction();
       $stadium = Stadium::where('stadium_name', $stadium_name)->first();
       $stadium->delete();
       DB::commit();

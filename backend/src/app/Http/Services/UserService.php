@@ -34,8 +34,8 @@ class UserService
     string $email,
     string $password
   ): ?User {
-    DB::beginTransaction();
     try {
+      DB::beginTransaction();
       $user = User::create([
         'first_name' => $first_name,
         'last_name' => $last_name,

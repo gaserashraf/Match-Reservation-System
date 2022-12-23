@@ -15,10 +15,10 @@ class StadiumController extends Controller
    * @param StadiumCreationRequest $request
    * @return Json
    */
-  public function createStadium(StadiumCreationRequest $request)
+  public function addStadium(StadiumCreationRequest $request)
   {
     $stadiumService = new StadiumService();
-    $stadium = $stadiumService->createStadium(
+    $stadium = $stadiumService->addStadium(
       $request->stadium_name,
       $request->number_of_rows,
       $request->number_of_seats_per_row

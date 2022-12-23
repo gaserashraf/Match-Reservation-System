@@ -48,13 +48,14 @@ Route::group(['middleware' => ['auth:api', 'verified', 'role:1']], function () {
 
   // Team Routes
   Route::group(['prefix' => 'team'], function () {
-    Route::post('create', [TeamController::class, 'createTeam'])->name('team.create');
+    Route::post('add', [TeamController::class, 'addTeam'])->name('team.create');
     Route::delete('delete/{team_name}', [TeamController::class, 'deleteTeam'])->name('team.delete');
   });
 
   // Stadium Routes
   Route::group(['prefix' => 'stadium'], function () {
-    Route::post('create', [StadiumController::class, 'createStadium'])->name('stadium.create');
+    Route::post('add', [StadiumController::class, 'addStadium'])->name('stadium.create');
     Route::delete('delete/{stadium_name}', [StadiumController::class, 'deleteStadium'])->name('stadium.delete');
   });
+
 });

@@ -13,14 +13,14 @@ class TeamService
    * @param Team $team
    * @return bool
    */
-  public function createTeam(string $team_name): ?Team
+  public function addTeam(string $team_name): ?Team
   {
     if (!$team_name) {
       return null;
     }
     $team_name = ProccessStrings::trim_replace_lower($team_name);
-    DB::beginTransaction();
     try {
+      DB::beginTransaction();
       $team = Team::create([
         'team_name' => $team_name,
       ]);
@@ -43,8 +43,8 @@ class TeamService
       return false;
     }
     $team_name = ProccessStrings::trim_replace_lower($team_name);
-    DB::beginTransaction();
     try {
+      DB::beginTransaction();
       $team = Team::where('team_name', $team_name)->first();
       $team->delete();
       DB::commit();

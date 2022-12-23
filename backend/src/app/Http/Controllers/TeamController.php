@@ -15,15 +15,15 @@ class TeamController extends Controller
    * @param TeamCreationRequest $request
    * @return Json
    */
-  public function createTeam(TeamCreationRequest $request)
+  public function addTeam(TeamCreationRequest $request)
   {
     $team_name = $request->input('team_name');
-    $team = (new TeamService())->createTeam($team_name);
+    $team = (new TeamService())->addTeam($team_name);
     if (!$team) {
       return $this->errorResponse('Team creation failed', 400);
     }
-    $team_resource = new TeamResource($team);
-    return $this->generalResponse($team_resource, 'Team created successfully', 201);
+    $teamResource = new TeamResource($team);
+    return $this->generalResponse($teamResource, 'Team created successfully', 201);
   }
 
   /*
@@ -39,7 +39,7 @@ class TeamController extends Controller
     if (!$team) {
       return $this->errorResponse('Team deletion failed', 400);
     }
-    $team_resource = new TeamResource($team);
-    return $this->generalResponse($team_resource, 'Team deleted successfully', 200);
+    $teamResource = new TeamResource($team);
+    return $this->generalResponse($teamResource, 'Team deleted successfully', 200);
   }
 }
