@@ -64,6 +64,7 @@ Route::group(['middleware' => ['auth:api', 'verified', 'role:1']], function () {
   // Football Match Routes
   Route::group(['prefix' => 'fbmatch'], function () {
     Route::post('add', [FootballMatchController::class, 'addMatch'])->name('fbmatch.add');
+    Route::delete('delete/{match_id}', [FootballMatchController::class, 'deleteMatch'])->name('fbmatch.delete');
     Route::put('update/{match_id}', [FootballMatchController::class, 'updateMatch'])->name('fbmatch.update');
   });
 });
@@ -74,3 +75,4 @@ Route::group(['middleware' => ['auth:api', 'verified', 'role:1']], function () {
 Route::get('team/all', [RefereeController::class, 'getAllTeams'])->name('referee.all');
 Route::get('stadium/all', [RefereeController::class, 'getAllStadiums'])->name('referee.all');
 Route::get('referee/all', [RefereeController::class, 'getAllReferees'])->name('referee.all');
+

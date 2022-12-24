@@ -6,12 +6,14 @@ use App\Http\Services\FootballMatchService;
 
 use App\Http\Requests\FootballMatchUpdateRequest;
 use App\Http\Requests\FootballMatchCreationRequest;
+use App\Http\Requests\FootballMatchDeletionRequest;
 
 use App\Http\Resources\FootballMatchResource;
 class FootballMatchController extends Controller
 {
 
   /**
+
   /**
    * only managers (role = 1) can create new matches
    *
@@ -96,3 +98,22 @@ class FootballMatchController extends Controller
     return $this->generalResponse($FootballMatchResource, "ok", 200);
   }
 
+  /**
+   * only managers (role = 1) can delete matches
+   *
+   * @param FootballMatchDeletionRequest $request
+   * @return Json
+   */
+  public function deleteMatch(FootballMatchDeletionRequest $request)
+  {
+    $request->validated();
+    $footballMatchService = new FootballMatchService();
+    $match_id = $request->match_id;
+    $footballMatch = $footballMatchService->deleteMatch($match_id);
+    if (!$footballMatch) {
+      return $this->errorResponse('Error deleting match', 500);
+    }
+    $FootballMatchResource = new FootballMatchResource($footballMatch);
+    return $this->generalResponse($FootballMatchResource, "ok", 200);
+  }
+}
