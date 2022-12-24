@@ -76,3 +76,12 @@ Route::get('team/all', [RefereeController::class, 'getAllTeams'])->name('referee
 Route::get('stadium/all', [RefereeController::class, 'getAllStadiums'])->name('referee.all');
 Route::get('referee/all', [RefereeController::class, 'getAllReferees'])->name('referee.all');
 
+// Football Match Routes
+// user can get all matches (by default) or
+// - get a specific match by id (match_id)
+// - get all matches of a specific team (team_name or team_id)
+// - get all matches on a specific stadium (stadium_name or stadium_id)
+// - get all matches having a specific referee (referee_id)
+// - get all matches on a specific date (date_at) or between two dates (date_from, date_to)
+// or a combination of the above, using query parameters with the following routes
+Route::get('fbmatch/view', [FootballMatchController::class, 'viewMatches'])->name('fbmatch.view');

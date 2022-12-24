@@ -7,6 +7,54 @@ use Illuminate\Support\Facades\DB;
 
 class FootballMatchService
 {
+  /**
+   * any user can view all matches or 
+   * a subset of them by passing query parameters
+   *
+   * @param ?int $match_id
+   * @param ?int $team_id
+   * @param ?int $stadium_id
+   * @param ?int $referee_id
+   * @param string $date_at
+   * @param string $date_from
+   * @param string $date_to
+   *
+   * @return Collection
+   */
+  public function viewMatchs(
+    ?int $match_id,
+    ?int $team_id,
+    ?int $stadium_id,
+    ?int $referee_id,
+    ?string $date_at,
+    ?string $date_from,
+    ?string $date_to
+  ): ?FootballMatch {
+    // it's either date_at or a range (date_from and date_to)
+    if ($date_at !== null && $date_from !== null && $date_to !== null) {
+      return null;
+    }
+    $result = FootballMatch::all();
+    if ($match_id !== null) {
+      $result = $result->where('id', $match_id);
+    }
+    if ($team_id !== null) {
+      $result = $result->where('teamA_id', $team_id)->orWhere('teamB_id', $team_id);
+    }
+    if ($stadium_id !== null) {
+      $result = $result->where('stadium_id', $stadium_id);
+    }
+    if ($referee_id !== null) {
+      $result = $result->where('referee_id', $referee_id);
+    }
+    if ($date_at !== null) {
+      $result = $result->where('date', $date_at);
+    }
+    if ($date_from !== null && $date_to !== null) {
+      $result = $result->whereBetween('date', [$date_from, $date_to]);
+    }
+    return $result;
+  }
 
   /*
    * only manager (role = 1) can create a match

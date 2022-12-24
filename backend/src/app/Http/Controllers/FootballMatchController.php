@@ -7,12 +7,40 @@ use App\Http\Services\FootballMatchService;
 use App\Http\Requests\FootballMatchUpdateRequest;
 use App\Http\Requests\FootballMatchCreationRequest;
 use App\Http\Requests\FootballMatchDeletionRequest;
+use App\Http\Requests\FootballMatchViewRequest;
 
 use App\Http\Resources\FootballMatchResource;
+use App\Http\Resources\FootballMatchCollection;
+
+
 class FootballMatchController extends Controller
 {
 
   /**
+   * any user can view all matches or
+   * a subset of them by passing query parameters
+   *
+   * @param FootballMatchViewRequest $request
+   * @return Json
+   */
+  public function viewMatches(FootballMatchViewRequest $request)
+  {
+    $request->validated();
+    $result = (new FootballMatchService())->viewMatchs(
+      $request->match_id,
+      $request->team_id,
+      $request->stadium_id,
+      $request->referee_id,
+      $request->date_at,
+      $request->date_from,
+      $request->date_to
+    );
+    if (!$result === null) {
+      return $this->errorResponse('Forbidden', 403);
+    }
+    $result = $result->paginate(10);
+    return $this->generalResponse(new FootballMatchCollection($result), "ok", 200);
+  }
 
   /**
    * only managers (role = 1) can create new matches
