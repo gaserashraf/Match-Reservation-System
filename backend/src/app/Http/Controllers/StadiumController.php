@@ -8,9 +8,25 @@ use App\Http\Requests\StadiumCreationRequest;
 use App\Http\Requests\StadiumDeletionRequest;
 
 use App\Http\Resources\StadiumResource;
+use App\Http\Resources\StadiumCollection;
 
 class StadiumController extends Controller
 {
+  /**
+   * any user can show all stadiums
+   *
+   * @return Json
+   */
+  public function getAllStadiums()
+  {
+    $stadiums = (new StadiumService())->getAllStadiums();
+    if (!$stadiums) {
+      return $this->errorResponse('Forbidden', 403);
+    }
+    $stadiums = $stadiums->paginate(10);
+    return $this->generalResponse(new StadiumCollection($stadiums), "ok", 200);
+  }
+
   /*
    * only managers (role = 1) can add a new stadium to the database.
    *

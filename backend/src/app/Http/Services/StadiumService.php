@@ -8,6 +8,19 @@ use App\Http\Misc\Helpers\ProccessStrings;
 
 class StadiumService
 {
+  /**
+   * Get all stadiums
+   * 
+   * @return Collection | null
+   */
+  public function getAllStadiums(): ?Collection
+  {
+    $stadiums = Stadium::all();
+    if(!$stadiums) {
+      return null;
+    }
+    return $stadiums;
+  }
 
   /**
    * only managers (role = 1) can add a new stadium to the database.
