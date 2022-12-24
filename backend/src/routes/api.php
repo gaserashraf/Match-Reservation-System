@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\StadiumController;
 use App\Http\Controllers\RefereeController;
+use App\Http\Controllers\FootballMatchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,6 +60,10 @@ Route::group(['middleware' => ['auth:api', 'verified', 'role:1']], function () {
   Route::group(['prefix' => 'referee'], function () {
     Route::post('add', [RefereeController::class, 'addReferee'])->name('referee.add');
     Route::delete('delete/{referee_id}', [RefereeController::class, 'deleteReferee'])->name('referee.delete');
+  });
+  // Football Match Routes
+  Route::group(['prefix' => 'fbmatch'], function () {
+    Route::post('add', [FootballMatchController::class, 'addMatch'])->name('fbmatch.add');
   });
 });
 
