@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Services\FootballMatchService;
 
+use App\Http\Requests\FootballMatchUpdateRequest;
 use App\Http\Requests\FootballMatchCreationRequest;
 
 use App\Http\Resources\FootballMatchResource;
@@ -51,3 +52,47 @@ class FootballMatchController extends Controller
     $FootballMatchResource = new FootballMatchResource($footballMatch);
     return $this->generalResponse($FootballMatchResource, "ok", 201);
   }
+
+  /**
+   * only managers (role = 1) can update matches
+   *
+   * @param FootballMatchUpdateRequest $request
+   * @return Json
+   */
+  public function updateMatch(FootballMatchUpdateRequest $request)
+  {
+    $request->validated();
+    $footballMatchService = new FootballMatchService();
+
+    $match_id = $request->match_id;
+    $teamA_id = $request->teamA_id;
+    $teamB_id = $request->teamB_id;
+    $stadium_id = $request->stadium_id;
+    $referee_id = $request->referee_id;
+    $linsmanA_id = $request->linsmanA_id;
+    $linsmanB_id = $request->linsmanB_id;
+    $date = $request->date;
+    $time = $request->time;
+    $score = $request->score;
+
+    $footballMatch = $footballMatchService->updateMatch(
+      $match_id,
+      $teamA_id,
+      $teamB_id,
+      $stadium_id,
+      $referee_id,
+      $linsmanA_id,
+      $linsmanB_id,
+      $date,
+      $time,
+      $score
+    );
+
+    if (!$footballMatch) {
+      return $this->errorResponse('Error updating match', 500);
+    }
+
+    $FootballMatchResource = new FootballMatchResource($footballMatch);
+    return $this->generalResponse($FootballMatchResource, "ok", 200);
+  }
+

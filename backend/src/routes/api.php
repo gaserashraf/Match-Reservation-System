@@ -64,6 +64,7 @@ Route::group(['middleware' => ['auth:api', 'verified', 'role:1']], function () {
   // Football Match Routes
   Route::group(['prefix' => 'fbmatch'], function () {
     Route::post('add', [FootballMatchController::class, 'addMatch'])->name('fbmatch.add');
+    Route::put('update/{match_id}', [FootballMatchController::class, 'updateMatch'])->name('fbmatch.update');
   });
 });
 
