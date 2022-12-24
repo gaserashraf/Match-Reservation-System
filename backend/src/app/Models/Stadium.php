@@ -16,4 +16,14 @@ class Stadium extends Model
     'number_of_rows',
     'number_of_seats_per_row',
   ];
+
+  public function matches()
+  {
+    return $this->hasMany(FootballMatch::class, 'stadium_id');
+  }
+
+  public function getCapacityAttribute()
+  {
+    return $this->number_of_rows * $this->number_of_seats_per_row;
+  }
 }

@@ -14,4 +14,19 @@ class Team extends Model
   protected $fillable = [
     'team_name',
   ];
+
+  public function homeMatches()
+  {
+    return $this->hasMany(FootballMatch::class, 'teamA_id');
+  }
+
+  public function awayMatches()
+  {
+    return $this->hasMany(FootballMatch::class, 'teamB_id');
+  }
+
+  public function allMatches()
+  {
+    return $this->homeMatches->merge($this->awayMatches);
+  }
 }

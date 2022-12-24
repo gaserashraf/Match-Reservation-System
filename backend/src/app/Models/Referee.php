@@ -15,4 +15,24 @@ class Referee extends Model
     'referee_name',
     'referee_email',
   ];
+
+  public function asReferee()
+  {
+    return $this->hasMany(FootballMatch::class, 'referee_id');
+  }
+
+  public function asLinesmanA()
+  {
+    return $this->hasMany(FootballMatch::class, 'linesmanA_id');
+  }
+
+  public function asLinesmanB()
+  {
+    return $this->hasMany(FootballMatch::class, 'linesmanB_id');
+  }
+
+  public function allMatches()
+  {
+    return $this->asReferee->merge($this->asLinesmanA)->merge($this->asLinesmanB);
+  }
 }

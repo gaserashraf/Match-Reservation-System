@@ -23,4 +23,44 @@ class FootballMatch extends Model
     'time',
   ];
 
+  // add the with() method to the model to eager load the relationships
+  // that are used in the view
+  protected array $with = [
+    'teamA',
+    'teamB',
+    'stadium',
+    'referee',
+    'linesmanA',
+    'linesmanB',
+  ];
+
+  public function teamA()
+  {
+    return $this->belongsTo(Team::class, 'teamA_id');
+  }
+
+  public function teamB()
+  {
+    return $this->belongsTo(Team::class, 'teamB_id');
+  }
+
+  public function stadium()
+  {
+    return $this->belongsTo(Stadium::class);
+  }
+
+  public function referee()
+  {
+    return $this->belongsTo(Referee::class);
+  }
+
+  public function linesmanA()
+  {
+    return $this->belongsTo(Linesman::class, 'linesmanA_id');
+  }
+
+  public function linesmanB()
+  {
+    return $this->belongsTo(Linesman::class, 'linesmanB_id');
+  }
 }
