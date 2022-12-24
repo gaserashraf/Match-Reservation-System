@@ -7,6 +7,20 @@ use Illuminate\Support\Facades\DB;
 
 class RefereeService
 {
+  /**
+   * any user can show all referees
+   *
+   * @return Referee | null
+   */
+  public function getAllReferees() : ?Referee
+  {
+    $referees = Referee::all();
+    if (!$referees) {
+      return null;
+    }
+    return $referees;
+  }
+
   /** only managers (role = 1) can add new referee
    *
    * @param string $referee_name

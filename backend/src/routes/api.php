@@ -67,3 +67,4 @@ Route::group(['middleware' => ['auth:api', 'verified', 'role:1']], function () {
  */
 Route::get('team/all', [RefereeController::class, 'getAllTeams'])->name('referee.all');
 Route::get('stadium/all', [RefereeController::class, 'getAllStadiums'])->name('referee.all');
+Route::get('referee/all', [RefereeController::class, 'getAllReferees'])->name('referee.all');

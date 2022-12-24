@@ -8,10 +8,27 @@ use App\Http\Requests\RefereeCreationRequest;
 use App\Http\Requests\RefereeDeletionRequest;
 
 use App\Http\Resources\RefereeResource;
+use App\Http\Resources\RefereeCollection;
 
 
 class RefereeController extends Controller
 {
+
+  /** 
+   * any user can show all referees
+   *
+   * @return Json
+   */
+  public function getAllReferees()
+  {
+    $referees = (new RefereeService())->getAllReferees();
+    if (!$referees) {
+      return $this->errorResponse('Forbidden', 403);
+    }
+    $referees = $referees->paginate(10);
+    return $this->generalResponse(new RefereeCollection($referees), "ok", 200);
+  }
+
   /*
    * only managers (role = 1) can add new referee
    *
