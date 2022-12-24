@@ -8,6 +8,20 @@ use App\Http\Misc\Helpers\ProccessStrings;
 
 class TeamService
 {
+  /*
+   * any user can show all teams
+   *
+   * @return Collection
+   */
+  public function getAllTeams()
+  {
+    $teams = Team::all();
+    if (!$teams) {
+      return null;
+    }
+    return $teams;
+  }
+
   /**
    * for managers (role = 1) only to create a team
    * @param Team $team

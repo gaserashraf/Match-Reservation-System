@@ -61,3 +61,8 @@ Route::group(['middleware' => ['auth:api', 'verified', 'role:1']], function () {
     Route::delete('delete/{referee_id}', [RefereeController::class, 'deleteReferee'])->name('referee.delete');
   });
 });
+
+/*
+ * Any User can access these routes 
+ */
+Route::get('team/all', [RefereeController::class, 'getAllTeams'])->name('referee.all');
