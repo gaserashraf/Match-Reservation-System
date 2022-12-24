@@ -9,6 +9,8 @@ class Referee extends Model
 {
   use HasFactory;
 
+  protected $table = 'referees';
+
   protected $fillable = [
     'referee_name',
     'referee_email',

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\StadiumService;
+
 use App\Http\Requests\StadiumCreationRequest;
 use App\Http\Requests\StadiumDeletionRequest;
+
 use App\Http\Resources\StadiumResource;
 
 class StadiumController extends Controller
@@ -17,6 +19,7 @@ class StadiumController extends Controller
    */
   public function addStadium(StadiumCreationRequest $request)
   {
+    $request->validated();
     $stadiumService = new StadiumService();
     $stadium = $stadiumService->addStadium(
       $request->stadium_name,
@@ -38,6 +41,7 @@ class StadiumController extends Controller
    */
   public function deleteStadium(StadiumDeletionRequest $request)
   {
+    $request->validated();
     $stadiumService = new StadiumService();
     $stadium = $stadiumService->deleteStadium($request->stadium_name);
     if (!$stadium) {

@@ -27,6 +27,7 @@ class UserController extends Controller
    */
   public function register(UserRegisterRequest $request)
   {
+    $request->validated();
     $userService = new UserService();
     $user = $userService->register(
       $request->first_name,
@@ -53,6 +54,7 @@ class UserController extends Controller
    */
   public function login(UserLoginRequest $request)
   {
+    $request->validated();
     $userService = new UserService();
     $user = $userService->checkLoginCredentials($request->email, $request->password);
     if (!$user) {

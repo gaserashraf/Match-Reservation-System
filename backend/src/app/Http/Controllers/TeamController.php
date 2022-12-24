@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Services\TeamService;
+
 use App\Http\Requests\TeamCreationRequest;
 use App\Http\Requests\TeamDeletionRequest;
+
 use App\Http\Resources\TeamResource;
 
 class TeamController extends Controller
@@ -17,6 +19,7 @@ class TeamController extends Controller
    */
   public function addTeam(TeamCreationRequest $request)
   {
+    $request->validated();
     $team_name = $request->input('team_name');
     $team = (new TeamService())->addTeam($team_name);
     if (!$team) {
@@ -34,6 +37,7 @@ class TeamController extends Controller
    */
   public function deleteTeam(TeamDeletionRequest $request)
   {
+    $request->validated();
     $team_name = $request->input('team_name');
     $team = (new TeamService())->deleteTeam($team_name);
     if (!$team) {

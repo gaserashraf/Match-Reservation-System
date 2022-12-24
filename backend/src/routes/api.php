@@ -21,7 +21,6 @@ use App\Http\Controllers\RefereeController;
 /*
  * General User Routes 
  */
-
 Route::post('/register', [UserController::class, 'register'])->name('register');
 Route::post('/login', [UserController::class, 'login'])->name('login');
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
@@ -36,8 +35,8 @@ Route::group(['prefix' => 'admin'], function () {
   // Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
   Route::group(['middleware' => ['auth:api', 'role:0']], function () {
-    Route::put('/allow/{username}', [AdminController::class, 'allowUser'])->name('admin.allow');
-    Route::delete('/delete/{username}', [AdminController::class, 'deleteUser'])->name('admin.delete');
+    Route::put('allow/{username}', [AdminController::class, 'allowUser'])->name('admin.allow');
+    Route::delete('delete/{username}', [AdminController::class, 'deleteUser'])->name('admin.delete');
   });
 });
 
@@ -46,23 +45,19 @@ Route::group(['prefix' => 'admin'], function () {
  * Manager Specific Routes 
  */
 Route::group(['middleware' => ['auth:api', 'verified', 'role:1']], function () {
-
   // Team Routes
   Route::group(['prefix' => 'team'], function () {
     Route::post('add', [TeamController::class, 'addTeam'])->name('team.add');
     Route::delete('delete/{team_name}', [TeamController::class, 'deleteTeam'])->name('team.delete');
   });
-
   // Stadium Routes
   Route::group(['prefix' => 'stadium'], function () {
     Route::post('add', [StadiumController::class, 'addStadium'])->name('stadium.add');
     Route::delete('delete/{stadium_name}', [StadiumController::class, 'deleteStadium'])->name('stadium.delete');
   });
-
   // Referee Routes
   Route::group(['prefix' => 'referee'], function () {
     Route::post('add', [RefereeController::class, 'addReferee'])->name('referee.add');
     Route::delete('delete/{referee_id}', [RefereeController::class, 'deleteReferee'])->name('referee.delete');
   });
-
 });
