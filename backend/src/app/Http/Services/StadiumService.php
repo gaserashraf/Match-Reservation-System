@@ -16,10 +16,27 @@ class StadiumService
   public function getAllStadiums(): ?Collection
   {
     $stadiums = Stadium::all();
-    if(!$stadiums) {
+    if (!$stadiums) {
       return null;
     }
     return $stadiums;
+  }
+
+  /**
+   * Get all reserved seats for a match
+   *
+   * @param string $stadium_name
+   * @param int $match_id
+   * @return array | null
+   */
+  public function getReservedSeats(string $stadium_name, int $match_id): array
+  {
+    $stadium = Stadium::where('stadium_name', $stadium_name)->first();
+    if (!$stadium) {
+      return null;
+    }
+    $reserved_seats = $stadium->getReservedSeats($match_id);
+    return $reserved_seats;
   }
 
   /**

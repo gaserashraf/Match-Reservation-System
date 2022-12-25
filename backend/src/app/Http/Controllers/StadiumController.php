@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StadiumReservedSeetsRequest;
 use App\Http\Services\StadiumService;
 
 use App\Http\Requests\StadiumCreationRequest;
@@ -25,6 +26,24 @@ class StadiumController extends Controller
     }
     $stadiums = $stadiums->paginate(10);
     return $this->generalResponse(new StadiumCollection($stadiums), "ok", 200);
+  }
+
+  /**
+   * any user can show all reserved seats for a match
+   *
+   * @param StadiumReservedSeetsRequest $request
+   * @return Json
+   */
+  public function getReservedSeats(StadiumReservedSeetsRequest $request)
+  {
+    $request->validated();
+    $stadium_name = $request->stadium_name;
+    $match_id = $request->match_id;
+    $reserved_seats = (new StadiumService())->getReservedSeats($stadium_name, $match_id);
+    if (!$reserved_seats) {
+      return $this->errorResponse('Forbidden', 403);
+    }
+    return $this->generalResponse($reserved_seats, "ok", 200);
   }
 
   /*
