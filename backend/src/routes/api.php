@@ -48,6 +48,8 @@ Route::group(['prefix' => 'admin'], function () {
  * Manager Specific Routes 
  */
 Route::group(['middleware' => ['auth:api', 'verified', 'role:1']], function () {
+  // edit profile
+  Route::put('/update/profile', [UserController::class, 'editProfile'])->name('user.edit');
   // Team Routes
   Route::group(['prefix' => 'team'], function () {
     Route::post('add', [TeamController::class, 'addTeam'])->name('team.add');
@@ -75,6 +77,8 @@ Route::group(['middleware' => ['auth:api', 'verified', 'role:1']], function () {
  * Customer Specific Routes 
  */
 Route::group(['middleware' => ['auth:api', 'verified', 'role:2']], function () {
+  // edit profile
+  Route::put('/update/profile', [UserController::class, 'editProfile'])->name('user.edit');
   // Match Tickets Routes
   Route::group(['prefix' => 'ticket'], function () {
     Route::post('buy', [MatchTicketsController::class, 'buyTicket'])->name('ticket.buy');

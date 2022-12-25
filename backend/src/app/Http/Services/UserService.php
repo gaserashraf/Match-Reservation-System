@@ -109,4 +109,44 @@ class UserService
     return false;
   }
 
+  /**
+   * update user profile (allowed for manager and customers)
+   *
+   * @param ?string $first_name
+   * @param ?string $last_name
+   * @param ?string $birth_date
+   * @param ?bool $gender
+   * @param ?string $nationality
+   * @param ?password $password
+   *
+   * @return User
+   */
+  public function updateProfile(
+    ?string $first_name,
+    ?string $last_name,
+    ?string $birth_date,
+    ?bool $gender,
+    ?string $nationality,
+    ?string $password
+  ): ?User {
+    $user = auth()->user();
+    if (!$user) {
+      return null;
+    }
+    try {
+      DB::beginTransaction();
+      $user->first_name = $first_name ?? $user->first_name;
+      $user->last_name = $last_name ?? $user->last_name;
+      $user->birth_date = $birth_date ?? $user->birth_date;
+      $user->gender = $gender ?? $$user->gender;
+      $user->nationality = $nationality ?? $user->nationality;
+      $user->password = $password ? Hash::make($password) : $user->password;
+      $user->save();
+      DB::commit();
+      return $user;
+    } catch (\Illuminate\Database\QueryException $ex) {
+      DB::rollback();
+      return null;
+    }
+  }
 }
