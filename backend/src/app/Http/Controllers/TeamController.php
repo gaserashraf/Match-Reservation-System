@@ -23,7 +23,7 @@ class TeamController extends Controller
     if (!$teams) {
       return $this->errorResponse('Forbidden', 403);
     }
-    $teams = $teams->paginate(10);
+    // $teams = $teams->paginate(10);
     return $this->generalResponse(new TeamCollection($teams), "ok", 200);
   }
 

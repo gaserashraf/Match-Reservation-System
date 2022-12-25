@@ -25,7 +25,7 @@ class MatchTicketsController extends Controller
     if (!$tickets) {
       return $this->errorResponse('forbidden', 403);
     }
-    $tickets = $tickets->paginate(10);
+    // $tickets = $tickets->paginate(10);
     return $this->generalResponse(new MatchTicketsCollection($tickets), "ok", 200);
   }
 

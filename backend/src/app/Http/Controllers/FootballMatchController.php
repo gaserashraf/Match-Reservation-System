@@ -38,7 +38,7 @@ class FootballMatchController extends Controller
     if (!$result === null) {
       return $this->errorResponse('Forbidden', 403);
     }
-    $result = $result->paginate(10);
+    // $result = $result->paginate(10);
     return $this->generalResponse(new FootballMatchCollection($result), "ok", 200);
   }
 

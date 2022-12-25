@@ -24,7 +24,7 @@ class StadiumController extends Controller
     if (!$stadiums) {
       return $this->errorResponse('Forbidden', 403);
     }
-    $stadiums = $stadiums->paginate(10);
+    // $stadiums = $stadiums->paginate(10);
     return $this->generalResponse(new StadiumCollection($stadiums), "ok", 200);
   }
 

@@ -25,7 +25,7 @@ class AdminController extends Controller
     if (!$users) {
       return $this->errorResponse('Forbidden', 403);
     }
-    $users = $users->paginate(10);
+    // $users = $users->paginate(10);
     return $this->generalResponse(new UserCollection($users), "ok", 200);
   }
 
@@ -42,7 +42,7 @@ class AdminController extends Controller
     if (!$users) {
       return $this->errorResponse('Forbidden', 403);
     }
-    $users = $users->paginate(10);
+    // $users = $users->paginate(10);
     return $this->generalResponse(new UserCollection($users), "ok", 200);
   }
 

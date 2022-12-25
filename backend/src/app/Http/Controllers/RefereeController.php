@@ -25,7 +25,7 @@ class RefereeController extends Controller
     if (!$referees) {
       return $this->errorResponse('Forbidden', 403);
     }
-    $referees = $referees->paginate(10);
+    // $referees = $referees->paginate(10);
     return $this->generalResponse(new RefereeCollection($referees), "ok", 200);
   }
 
