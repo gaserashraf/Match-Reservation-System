@@ -1,3 +1,5 @@
+import Axios from 'axios';
+import { apiBaseUrl } from '../../config.json';
 export const handleRegister = (user) => {
   console.log(user);
 };

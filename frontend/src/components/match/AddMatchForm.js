@@ -78,140 +78,138 @@ const AddMatchFrom = (props) => {
   };
   return (
     <div>
-      <div>
-        <h1 className="text-center mb-2">
-          {props.editMatch ? "Edit Match" : "Add Match"}
-        </h1>
+      <h1 className="text-center mb-2">
+        {props.editMatch ? "Edit Match" : "Add Match"}
+      </h1>
 
-        <div className="row justify-content-center mb-2">
-          <div className="col-md-12">
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Team1</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={team1}
-                label="Team1"
-                onChange={(e) => setTeam1(e.target.value)}
-              >
-                {teams.map((team) => (
+      <div className="row justify-content-center mb-2">
+        <div className="col-md-12">
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Team1</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={team1}
+              label="Team1"
+              onChange={(e) => setTeam1(e.target.value)}
+            >
+              {teams.map((team) => (
+                <MenuItem value={team}>{team}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
+      </div>
+
+      <div className="row justify-content-center mb-2">
+        <div className="col-md-12">
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Team2</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={team2}
+              label="Team2"
+              onChange={(e) => setTeam2(e.target.value)}
+            >
+              {teams
+                .filter((team) => team !== team1)
+                .map((team) => (
                   <MenuItem value={team}>{team}</MenuItem>
                 ))}
-              </Select>
-            </FormControl>
-          </div>
+            </Select>
+          </FormControl>
         </div>
+      </div>
 
-        <div className="row justify-content-center mb-2">
-          <div className="col-md-12">
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Team2</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={team2}
-                label="Team2"
-                onChange={(e) => setTeam2(e.target.value)}
-              >
-                {teams
-                  .filter((team) => team !== team1)
-                  .map((team) => (
-                    <MenuItem value={team}>{team}</MenuItem>
-                  ))}
-              </Select>
-            </FormControl>
-          </div>
-        </div>
-
-        <div className="row justify-content-center mb-2">
-          <div className="col-md-12">
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Stadium</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={stadium}
-                label="Team2"
-                onChange={(e) => setStadium(e.target.value)}
-              >
-                {stadiums.map((stadium) => (
-                  <MenuItem value={stadium}>{stadium}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </div>
-        </div>
-
-        <div className="row justify-content-center mb-2">
-          <div className="col-md-12">
-            <TextField
-              required
-              id="filled-required"
-              label="Main Referee"
-              variant="filled"
-              value={mainReferee}
-              onChange={(e) => setMainReferee(e.target.value)}
-              sx={{ width: "100%" }}
-            />
-          </div>
-        </div>
-
-        <div className="row justify-content-center mb-2">
-          <div className="col-md-12">
-            <TextField
-              required
-              id="filled-required"
-              label="Line Referee 1"
-              variant="filled"
-              className="mr-3"
-              value={lineReferee1}
-              onChange={(e) => setLineReferee1(e.target.value)}
-              sx={{ width: "100%" }}
-            />
-          </div>
-        </div>
-
-        <div className="row justify-content-center mb-2">
-          <div className="col-md-12">
-            <TextField
-              required
-              id="filled-required"
-              label="Line Referee 2"
-              variant="filled"
-              className="mr-3"
-              value={lineReferee2}
-              onChange={(e) => setLineReferee2(e.target.value)}
-              sx={{ width: "100%" }}
-            />
-          </div>
-        </div>
-
-        <div className="row justify-content-center mb-2">
-          <div className="col-md-12">
-            <LocalizationProvider dateAdapter={AdapterMoment}>
-              <DateTimePicker
-                label="Date & Time"
-                value={dateAndTime}
-                onChange={(e) => setDateAndTime(e)}
-                renderInput={(params) => (
-                  <TextField {...params} sx={{ width: "100%" }} />
-                )}
-              />
-            </LocalizationProvider>
-          </div>
-        </div>
-
-        <div className="row justify-content-center mb-2">
-          <div className="col-md-12">
-            <Button
-              variant="outlined"
-              size="large"
-              sx={{ width: "100%" }}
-              onClick={onSubmit}
+      <div className="row justify-content-center mb-2">
+        <div className="col-md-12">
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Stadium</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={stadium}
+              label="Team2"
+              onChange={(e) => setStadium(e.target.value)}
             >
-              {props.editMatch ? "Edit Match" : "Add Match"}
-            </Button>
-          </div>
+              {stadiums.map((stadium) => (
+                <MenuItem value={stadium}>{stadium}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
+      </div>
+
+      <div className="row justify-content-center mb-2">
+        <div className="col-md-12">
+          <TextField
+            required
+            id="filled-required"
+            label="Main Referee"
+            variant="filled"
+            value={mainReferee}
+            onChange={(e) => setMainReferee(e.target.value)}
+            sx={{ width: "100%" }}
+          />
+        </div>
+      </div>
+
+      <div className="row justify-content-center mb-2">
+        <div className="col-md-12">
+          <TextField
+            required
+            id="filled-required"
+            label="Line Referee 1"
+            variant="filled"
+            className="mr-3"
+            value={lineReferee1}
+            onChange={(e) => setLineReferee1(e.target.value)}
+            sx={{ width: "100%" }}
+          />
+        </div>
+      </div>
+
+      <div className="row justify-content-center mb-2">
+        <div className="col-md-12">
+          <TextField
+            required
+            id="filled-required"
+            label="Line Referee 2"
+            variant="filled"
+            className="mr-3"
+            value={lineReferee2}
+            onChange={(e) => setLineReferee2(e.target.value)}
+            sx={{ width: "100%" }}
+          />
+        </div>
+      </div>
+
+      <div className="row justify-content-center mb-2">
+        <div className="col-md-12">
+          <LocalizationProvider dateAdapter={AdapterMoment}>
+            <DateTimePicker
+              label="Date & Time"
+              value={dateAndTime}
+              onChange={(e) => setDateAndTime(e)}
+              renderInput={(params) => (
+                <TextField {...params} sx={{ width: "100%" }} />
+              )}
+            />
+          </LocalizationProvider>
+        </div>
+      </div>
+
+      <div className="row justify-content-center mb-2">
+        <div className="col-md-12">
+          <Button
+            variant="outlined"
+            size="large"
+            sx={{ width: "100%" }}
+            onClick={onSubmit}
+          >
+            {props.editMatch ? "Edit Match" : "Add Match"}
+          </Button>
         </div>
       </div>
     </div>

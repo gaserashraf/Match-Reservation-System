@@ -16,13 +16,13 @@ const MatchCard = ({
   handleEdit,
 }) => {
   dateAndTime = new Date(dateAndTime);
-  var current_date =
+  const current_date =
     dateAndTime.getFullYear() +
     "-" +
     (dateAndTime.getMonth() + 1) +
     "-" +
     dateAndTime.getDate();
-  var current_time = dateAndTime.getHours() + ":" + dateAndTime.getMinutes();
+    const current_time = dateAndTime.getHours() + ":" + dateAndTime.getMinutes();
   return (
     <Card sx={{ width: 345 }}>
       <CardContent

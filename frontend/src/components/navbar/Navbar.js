@@ -73,7 +73,7 @@ const Navbar = () => {
     p: 4,
   };
 
-  let Auth = !localStorage.getItem("user");
+  let Auth = localStorage.getItem("user");
   return (
     <nav class="navbar navbar-expand-lg navbar-light justify-content-between">
       <Modal
