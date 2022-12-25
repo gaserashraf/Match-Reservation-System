@@ -62,7 +62,13 @@ class MatchTicketsService
       if(!$match_ticket) {
         return false;
       }
-      $match_ticket->delete();
+      // the customer can cancel the ticket only 3 days before the match date
+      $canCancel = $match_ticket->fbmatch->date->subDays(3)->isPast();
+      if($canCancel) {
+        $match_ticket->delete();
+      } else {
+        return false;
+      }
       DB::commit();
       return true;
     } catch (\Illuminate\Database\QueryException $ex) {
