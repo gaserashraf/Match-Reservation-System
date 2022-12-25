@@ -11,11 +11,7 @@ const Login = () => {
 
   const onSubmit = () => {
     if (email === "" || password === "") {
-      alertContext.setAlert(
-        "Please fill all the fields",
-        "fas fa-times",
-        "error"
-      );
+      alertContext.setAlert("Please fill all the fields", "error");
 
       return;
     }

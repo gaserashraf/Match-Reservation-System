@@ -52,7 +52,6 @@ const Match = () => {
   let current_time =
     matchTmp.dateAndTime.getHours() + ":" + matchTmp.dateAndTime.getMinutes();
 
-    
   useEffect(() => {
     // To be replaced with API call
 
@@ -61,7 +60,7 @@ const Match = () => {
 
   // stadium details
   let rows = 5;
-  let numberOfSeats = 20;
+  let numberOfSeats = 10;
   // zero based
   const reservedSeatsArr = [
     [0, 1],
@@ -100,10 +99,8 @@ const Match = () => {
     setSeats([]);
     setCardNumber("");
     setCardPin("");
-    
   };
   const handleSeatClick = (i, j) => {
-
     //check if it is reserved
     for (let z = 0; z < reservedSeats.length; z++) {
       if (reservedSeats[z][0] === i && reservedSeats[z][1] === j) {
@@ -118,7 +115,6 @@ const Match = () => {
         return;
       }
     }
-
 
     setSeats([...seats, [i, j]]);
   };
@@ -136,7 +132,7 @@ const Match = () => {
         return "green";
       }
     }
-    return "gray";
+    return "#242424";
   };
   const getSeat = (row, seat) => {
     return (
@@ -158,25 +154,19 @@ const Match = () => {
     <div className="py-3">
       <div className="row align-items-center">
         <div className="col-4">
-          <Typography variant="h5" component="div">
+          <h5>
             <div>
               <img src={flag} alt="flag" className="w-100" />
             </div>
             {match.team1}
-          </Typography>
+          </h5>
         </div>
         <div className="col-4">
           <div className="row justify-content-center align-items-start mb-3">
-            <Typography variant="h3" component="div">
+            <h3 style={{fontSize:"50px"}}>
               {current_time}
-              <Typography
-                variant="h6"
-                component="div"
-                style={{ fontSize: "20px" }}
-              >
-                {current_date}
-              </Typography>
-            </Typography>
+              <h6 style={{ fontSize: "20px" }}>{current_date}</h6>
+            </h3>
           </div>
           <div
             className="row justify-content-center align-items-center"
@@ -300,7 +290,7 @@ const Match = () => {
                 <div
                   className="d-flex align-items-center mr-3 mb-3 flex-column justify-content-center"
                   style={{
-                    background: "#F0F0F0",
+                    background: "#fff",
                     width: "80px",
                     height: "80px",
                     borderRadius: "10px",

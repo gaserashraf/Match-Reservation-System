@@ -9,12 +9,12 @@ const CardLink = ({ title, description, link, icon }) => {
   return (
     <Link to={link} className="mb-2 mr-0 mr-md-2 w-sm-100">
       <Card sx={{ width: 345, margin: 0 }} className="w-sm-100">
-        <CardActionArea className="py-5" style={{ backgroundColor: "#f0f0f0" }}>
+        <CardActionArea className="py-5" style={{ backgroundColor: "#fff" }}>
           <i class={icon} style={{ fontSize: 50 }}></i>
           <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
+            <h3>
               {title}
-            </Typography>
+            </h3>
             <Typography variant="body2" color="text.secondary">
               {description}
             </Typography>

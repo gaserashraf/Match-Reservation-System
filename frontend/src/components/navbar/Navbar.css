@@ -22,7 +22,7 @@ button:focus {
   position: sticky;
   top: 0;
   z-index: 999;
-  background-color: #f0f0f0;
+  background-color: #fff;
 }
 
 .navbar-container {

@@ -55,24 +55,16 @@ const NewUsers = () => {
 
   const handleOk = (user) => {
     if (handleAccpetNewUser(user)) {
-      alertContext.setAlert(
-        "user has been accepted",
-        "fas fa-times",
-        "success"
-      );
+      alertContext.setAlert("user has been accepted", "success");
     } else {
-      alertContext.setAlert("error in accepting user", "fas fa-times", "error");
+      alertContext.setAlert("error in accepting user", "error");
     }
   };
   const handleNo = (user) => {
     if (handleRejectNewUser(user)) {
-      alertContext.setAlert(
-        "user has been rejected",
-        "fas fa-times",
-        "success"
-      );
+      alertContext.setAlert("user has been rejected", "success");
     } else {
-      alertContext.setAlert("error in rejecting user", "fas fa-times", "error");
+      alertContext.setAlert("error in rejecting user", "error");
     }
   };
 

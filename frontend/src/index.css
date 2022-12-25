@@ -1,0 +1,17 @@
+@font-face {
+  font-family: "MyFont";
+  src: local("MyFont"),
+    url(./assets/fonts/Qatar2022Arabic-Bold.ttf) format("woff");
+  /* other formats include: 'woff2', 'truetype, 'opentype',
+                              'embedded-opentype', and 'svg' */
+}
+
+* {
+  font-family: "MyFont";
+}
+.App {
+  background-image: url("./assets/images/bg1.jpg") ;
+  background-size: cover;
+  height: 100vh;
+  color: black;
+}

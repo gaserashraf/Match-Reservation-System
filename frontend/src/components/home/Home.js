@@ -1,7 +1,8 @@
 import React from "react";
-import CardLink from "../cardLink/CardLink";const Home = () => {
+import CardLink from "../cardLink/CardLink";
+const Home = () => {
   return (
-    <div>
+    <div >
       <h1 className="mb-5">Welcome to world cup qatar 2022</h1>
       <div className="row justify-content-center">
         <div className="col-md-12 d-flex flex-wrap justify-content-between">

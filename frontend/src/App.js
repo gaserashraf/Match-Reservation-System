@@ -17,6 +17,8 @@ import CustomAlert from "./components/alert/CustomAlert";
 import Stadiums from "./components/stadium/Stadiums";
 import Matches from "./components/match/Matches";
 import Match from "./components/match/Match";
+import Tickets from "./components/Ticket/Tickets";
+import './index.css'
 function App() {
   return (
     <div className="App">
@@ -37,6 +39,7 @@ function App() {
                   />
 
                   <Route path="/stadiums" element={<Stadiums />} />
+                  <Route path="/tickets" element={<Tickets />} />
                   <Route path="/matchs" element={<Matches />} />
                   <Route path="/matchs/:id" element={<Match />} />
                 </Route>

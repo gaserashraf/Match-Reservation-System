@@ -75,7 +75,7 @@ const Navbar = () => {
 
   let Auth = localStorage.getItem("user");
   return (
-    <nav class="navbar navbar-expand-lg navbar-light justify-content-between">
+    <nav className="navbar navbar-expand-lg navbar-light justify-content-between mb-5">
       <Modal
         open={openEditProfile}
         onClose={handleClose}

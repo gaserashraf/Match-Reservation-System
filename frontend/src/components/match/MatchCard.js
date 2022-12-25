@@ -22,12 +22,12 @@ const MatchCard = ({
     (dateAndTime.getMonth() + 1) +
     "-" +
     dateAndTime.getDate();
-    const current_time = dateAndTime.getHours() + ":" + dateAndTime.getMinutes();
+  const current_time = dateAndTime.getHours() + ":" + dateAndTime.getMinutes();
   return (
     <Card sx={{ width: 345 }}>
       <CardContent
         className="py-3"
-        style={{ backgroundColor: "#f0f0f0", position: "relative" }}
+        style={{ backgroundColor: "#fff", position: "relative" }}
       >
         <>
           <IconButton
@@ -62,40 +62,26 @@ const MatchCard = ({
         <CardContent className="pb-0">
           <div className="row">
             <div className="col-4">
-              <Typography
-                variant="h5"
-                component="div"
-                style={{ fontSize: "20px" }}
-              >
+              <h5 style={{ fontSize: "20px" }}>
                 <div>
                   <img src={flag} alt="flag" className="w-100" />
                 </div>
                 {team1}
-              </Typography>
+              </h5>
             </div>
             <div className="col-4">
-              <Typography variant="h5" component="div">
+              <h5 style={{fontSize:"28px"}}>
                 {current_time}
-                <Typography
-                  variant="h6"
-                  component="div"
-                  style={{ fontSize: "12px" }}
-                >
-                  {current_date}
-                </Typography>
-              </Typography>
+                <h6 style={{ fontSize: "12px" }}>{current_date}</h6>
+              </h5>
             </div>
             <div className="col-4">
-              <Typography
-                variant="h5"
-                component="div"
-                style={{ fontSize: "20px" }}
-              >
+              <h5 style={{ fontSize: "22px" }}>
                 <div>
                   <img src={flag} alt="flag" className="w-100" />
                 </div>
                 {team2}
-              </Typography>
+              </h5>
             </div>
           </div>
           <div className="row justify-content-center align-items-center">

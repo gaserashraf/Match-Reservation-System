@@ -54,13 +54,9 @@ const CurrentUsers = () => {
   ];
   const handleNo = (user) => {
     if (handelDeleteUser(user)) {
-      alertContext.setAlert("user has been deleted", "fas fa-times", "success");
+      alertContext.setAlert("user has been deleted", "success");
     } else {
-      alertContext.setAlert(
-        "user has not been deleted",
-        "fas fa-times",
-        "error"
-      );
+      alertContext.setAlert("user has not been deleted", "error");
     }
   };
 

@@ -10,34 +10,34 @@ const CustomAlert = () => {
   const vertical = "top";
   const horizontal = "right";
   return (
-    alertContext.alerts.length > 0 &&
-    alertContext.alerts.map((alert) => (
+    alertContext?.alerts?.length > 0 &&
+    alertContext?.alerts?.map((alert) => (
       <Snackbar
         anchorOrigin={{ vertical, horizontal }}
-        key={alert.id}
+        key={alert?.id}
         open={true}
         style={{
           opacity: .95,
         }}
       >
         <Alert
-          key={alert.id}
-          severity={alert.severity}
+          key={alert?.id}
+          severity={alert?.severity}
           action={
             <IconButton
               aria-label="close"
               color="inherit"
               size="small"
               onClick={() => {
-                alertContext.removeAlert(alert.id);
+                alertContext.removeAlert(alert?.id);
               }}
             >
-              <i class="fas fa-times"></i>
+              <i className="fas fa-times"></i>
             </IconButton>
           }
           sx={{ width: "100%" }}
         >
-          {alert.msg}
+          {alert?.msg}
         </Alert>
       </Snackbar>
     ))

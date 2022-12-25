@@ -21,7 +21,7 @@ const UserCard = ({
     <Card sx={{ width: 345 }}>
       <CardContent
         className="py-2"
-        style={{ backgroundColor: "#f0f0f0", position: "relative" }}
+        style={{ backgroundColor: "#fff", position: "relative" }}
       >
         {type === "current" ? ( // if type is new show the buttons}
           <IconButton

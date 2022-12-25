@@ -16,16 +16,18 @@ const StadiumCard = ({ name, numberOfSeats }) => {
       />
       <CardContent
         className="py-2"
-        style={{ backgroundColor: "#f0f0f0", position: "relative" }}
+        style={{ backgroundColor: "#fff", position: "relative" }}
       >
         <CardContent className="pb-0">
-          <Typography variant="h5" component="div">
+          <h5 variant="h5" component="div">
             {name}
-          </Typography>
-          <Typography variant="h6" component="div">
+          </h5>
+          <h5 variant="h6" component="div">
+          <i className="fas fa-couch mr-2" style={{color:'green'}}></i>
             {numberOfSeats}
             {" Seats"}
-          </Typography>
+          
+          </h5>
         </CardContent>
       </CardContent>
     </Card>
