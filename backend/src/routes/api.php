@@ -36,6 +36,8 @@ Route::group(['prefix' => 'admin'], function () {
   // Route::post('/login', [AdminController::class, 'login'])->name('admin.login');
   // Route::post('/logout', [AdminController::class, 'logout'])->name('admin.logout');
   Route::group(['middleware' => ['auth:api', 'role:0']], function () {
+    Route::get('/users/new', [AdminController::class, 'getNewUsers'])->name('admin.users');
+    Route::get('/users/current', [AdminController::class, 'getCurrentUsers'])->name('admin.users');
     Route::put('allow/{username}', [AdminController::class, 'allowUser'])->name('admin.allow');
     Route::delete('delete/{username}', [AdminController::class, 'deleteUser'])->name('admin.delete');
   });

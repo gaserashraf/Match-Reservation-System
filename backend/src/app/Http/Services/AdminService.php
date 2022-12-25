@@ -6,6 +6,20 @@ use App\Models\User;
 
 class AdminService
 {
+
+  /**
+   * for admins (role = 0) only, get all users except any admins
+   * allowed = true => means get current users (to edit/delete)
+   * allowed = false => means get new users (to add)
+   *
+   * @param bool $allowed
+   * @return ?Collection
+   */
+  public function getUsers(bool $allowed = false)
+  {
+    return User::where('role', '!=', 0)->where('allowed', false)->get();
+  }
+
   /**
    * for admins (role = 0) only to allow or disallow a user
    * @param User $user
