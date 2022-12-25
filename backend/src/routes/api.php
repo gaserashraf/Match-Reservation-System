@@ -7,6 +7,7 @@ use App\Http\Controllers\TeamController;
 use App\Http\Controllers\StadiumController;
 use App\Http\Controllers\RefereeController;
 use App\Http\Controllers\FootballMatchController;
+use App\Http\Controllers\MatchTicketsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,11 +70,25 @@ Route::group(['middleware' => ['auth:api', 'verified', 'role:1']], function () {
 });
 
 /*
+ * Customer Specific Routes 
+ */
+Route::group(['middleware' => ['auth:api', 'verified', 'role:2']], function () {
+  // Match Tickets Routes
+  Route::group(['prefix' => 'ticket'], function () {
+    Route::post('buy', [MatchTicketsController::class, 'buyTicket'])->name('ticket.buy');
+    Route::get('mytickets', [MatchTicketsController::class, 'showAllTickets'])->name('ticket.mytickets');
+    Route::delete('cancel/{ticket_id}', [MatchTicketsController::class, 'cancelTicket'])->name('ticket.cancel');
+  });
+});
+
+/*
  * Any User can access these routes 
  */
 Route::get('team/all', [RefereeController::class, 'getAllTeams'])->name('referee.all');
-Route::get('stadium/all', [RefereeController::class, 'getAllStadiums'])->name('referee.all');
 Route::get('referee/all', [RefereeController::class, 'getAllReferees'])->name('referee.all');
+
+Route::get('stadium/all', [RefereeController::class, 'getAllStadiums'])->name('referee.all');
+Route::get('stadium/reserved_seats/{stadium_name}/{match_id}', [StadiumController::class, 'getReservedSeatsPerMatch'])->name('stadium.reserved_seats');
 
 // Football Match Routes
 // user can get all matches (by default) or
