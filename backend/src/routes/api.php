@@ -90,10 +90,10 @@ Route::group(['middleware' => ['auth:api', 'role:2']], function () {
 /*
  * Any User can access these routes 
  */
-Route::get('team/all', [RefereeController::class, 'getAllTeams'])->name('referee.all');
+Route::get('team/all', [TeamController::class, 'getAllTeams'])->name('referee.all');
 Route::get('referee/all', [RefereeController::class, 'getAllReferees'])->name('referee.all');
 
-Route::get('stadium/all', [RefereeController::class, 'getAllStadiums'])->name('referee.all');
+Route::get('stadium/all', [StadiumController::class, 'getAllStadiums'])->name('referee.all');
 Route::get('stadium/reserved_seats/{stadium_id}/{match_id}', [StadiumController::class, 'getReservedSeatsPerMatch'])->name('stadium.reserved_seats');
 
 // Football Match Routes

@@ -14,8 +14,8 @@ class TeamSeeder extends Seeder
    */
   public function run()
   {
-    Team::factory()->count(10)->create();
-
+    // Team::factory()->count(10)->create();
+    
     // insert those following teams as a start
     $teams = [
       "Qatar", "Ecuador", "Senegal", "Netherlands",
