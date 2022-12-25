@@ -25,7 +25,7 @@ class FootballMatch extends Model
 
   // add the with() method to the model to eager load the relationships
   // that are used in the view
-  protected array $with = [
+  protected $with = [
     'teamA',
     'teamB',
     'stadium',
@@ -56,11 +56,17 @@ class FootballMatch extends Model
 
   public function linesmanA()
   {
-    return $this->belongsTo(Linesman::class, 'linesmanA_id');
+    return $this->belongsTo(Referee::class, 'linesmanA_id');
   }
 
   public function linesmanB()
   {
-    return $this->belongsTo(Linesman::class, 'linesmanB_id');
+    return $this->belongsTo(Referee::class, 'linesmanB_id');
   }
+
+  public function tickets()
+  {
+    return $this->hasMany(MatchTickets::class, 'match_id');
+  }
+
 }
