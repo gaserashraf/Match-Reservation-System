@@ -25,7 +25,7 @@ class TeamCreationRequest extends FormRequest
   public function rules()
   {
     return [
-      'team_name' => 'required|regex:/^[a-zA-Z-]+$/|max:255',
+      'team_name' => 'required|regex:/^[a-zA-Z-_ ]+$/|max:255',
     ];
   }
 }

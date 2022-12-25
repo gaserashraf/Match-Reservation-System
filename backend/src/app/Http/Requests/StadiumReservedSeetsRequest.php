@@ -21,7 +21,7 @@ class StadiumReservedSeetsRequest extends FormRequest
   public function all($keys = null)
   {
     $data = parent::all($keys);
-    $data['stadium_name'] = $this->route('stadium_name');
+    $data['stadium_id'] = $this->route('stadium_id');
     $data['match_id'] = $this->route('match_id');
     return $data;
   }
@@ -34,7 +34,7 @@ class StadiumReservedSeetsRequest extends FormRequest
   public function rules()
   {
     return [
-      'stadium_name' => 'required|string|exists:stadiums,stadium_name',
+      'stadium_id' => 'required|integer|exists:stadiums,id',
       'match_id' => 'required|integer|exists:football_matches,id',
     ];
   }

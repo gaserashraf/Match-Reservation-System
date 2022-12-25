@@ -34,14 +34,14 @@ class StadiumController extends Controller
    * @param StadiumReservedSeetsRequest $request
    * @return Json
    */
-  public function getReservedSeats(StadiumReservedSeetsRequest $request)
+  public function getReservedSeatsPerMatch(StadiumReservedSeetsRequest $request)
   {
     $request->validated();
-    $stadium_name = $request->stadium_name;
+    $stadium_id = $request->stadium_id;
     $match_id = $request->match_id;
-    $reserved_seats = (new StadiumService())->getReservedSeats($stadium_name, $match_id);
+    $reserved_seats = (new StadiumService())->getReservedSeats($stadium_id, $match_id);
     if (!$reserved_seats) {
-      return $this->errorResponse('Forbidden', 403);
+      return $this->errorResponse('no seats reserved for this match or an error occured', 404);
     }
     return $this->generalResponse($reserved_seats, "ok", 200);
   }

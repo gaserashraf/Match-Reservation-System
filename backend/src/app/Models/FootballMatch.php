@@ -66,7 +66,7 @@ class FootballMatch extends Model
 
   public function tickets()
   {
-    return $this->hasMany(MatchTickets::class, 'match_id');
+    return $this->hasMany(MatchTickets::class, 'match_id', 'id');
   }
 
 }

@@ -29,7 +29,7 @@ class FootballMatchService
     ?string $date_at,
     ?string $date_from,
     ?string $date_to
-  ): ?FootballMatch {
+  ) {
     // it's either date_at or a range (date_from and date_to)
     if ($date_at !== null && $date_from !== null && $date_to !== null) {
       return null;

@@ -25,13 +25,13 @@ class StadiumService
   /**
    * Get all reserved seats for a match
    *
-   * @param string $stadium_name
+   * @param int $stadium_name
    * @param int $match_id
    * @return array | null
    */
-  public function getReservedSeats(string $stadium_name, int $match_id): array
+  public function getReservedSeats(int $stadium_id, int $match_id): ?array
   {
-    $stadium = Stadium::where('stadium_name', $stadium_name)->first();
+    $stadium = Stadium::where('id', $stadium_id)->first();
     if (!$stadium) {
       return null;
     }
@@ -49,9 +49,6 @@ class StadiumService
    */
   public function addStadium(string $stadium_name, int $number_of_rows, int $number_of_seats_per_row): ?Stadium
   {
-    if (!$stadium_name || !$stadium_shape || !$stadium_max_capacity) {
-      return null;
-    }
     $stadium_name = ProccessStrings::trim_replace_lower($stadium_name);
     try {
       DB::beginTransaction();

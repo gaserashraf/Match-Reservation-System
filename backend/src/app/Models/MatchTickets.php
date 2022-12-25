@@ -14,8 +14,8 @@ class MatchTickets extends Model
   protected $fillable = [
     'user_id',
     'match_id',
-    'row',
-    'seat',
+    'row_number',
+    'seat_number',
   ];
 
   protected $with = [
@@ -28,7 +28,8 @@ class MatchTickets extends Model
     return $this->belongsTo(User::class, 'user_id');
   }
 
-  public function fbmatch()
+  // TODO: change to fbmatch
+  public function match()
   {
     return $this->belongsTo(FootballMatch::class, 'match_id');
   }

@@ -25,9 +25,9 @@ class StadiumCreationRequest extends FormRequest
   public function rules()
   {
     return [
-      'stadium_name' => 'required|regex:/^[a-zA-Z-]+$/|max:255',
-      'stadium_shape' => 'required|integer|gt:0',
-      'stadium_max_capacity' => 'required|integer|gt:0',
+      'stadium_name' => 'required|regex:/^[a-zA-Z-_ ]+$/|max:255',
+      'number_of_rows' => 'required|integer|min:1|max:100',
+      'number_of_seats_per_row' => 'required|integer|min:100|max:1000',
     ];
   }
 }

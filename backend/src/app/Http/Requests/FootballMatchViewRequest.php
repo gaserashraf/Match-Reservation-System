@@ -8,6 +8,7 @@ class FootballMatchViewRequest extends FormRequest
 {
 
   protected $stopOnFirstFailure = true;
+
   /**
    * Determine if the user is authorized to make this request.
    *
@@ -15,19 +16,7 @@ class FootballMatchViewRequest extends FormRequest
    */
   public function authorize()
   {
-    return false;
-  }
-  public function all($keys = null)
-  {
-    $data = parent::all($keys);
-    $data['match_id'] = $this->route('match_id');
-    $data['team_id'] = $this->route('team_id');
-    $data['stadium_id'] = $this->route('stadium_id');
-    $data['referee_id'] = $this->route('referee_id');
-    $data['date_at'] = $this->route('date_at');
-    $data['date_from'] = $this->route('date_from');
-    $data['date_to'] = $this->route('date_to');
-    return $data;
+    return true;
   }
 
   /**

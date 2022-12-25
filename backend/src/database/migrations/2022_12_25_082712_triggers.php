@@ -40,15 +40,20 @@ return new class extends Migration
     DB::statement('CREATE OR REPLACE FUNCTION delete_violating_tickets_on_stadium_update_2() RETURNS trigger AS $$
       DECLARE
         match_id_var integer;
+        tickets_to_delete integer;
       BEGIN
         match_id_var := (SELECT id FROM football_matches WHERE football_matches.stadium_id = OLD.id);
+        tickets_to_delete := get_match_tickets_count(match_id_var) - get_stadium_capacity(match_id_var);
+        IF tickets_to_delete IS NULL THEN
+          tickets_to_delete := 0;
+        END IF;
         DELETE FROM match_tickets
         WHERE match_tickets.match_id = match_id_var
         AND match_tickets.id IN (
           SELECT match_tickets.id FROM match_tickets
           WHERE match_tickets.match_id = match_id_var
           ORDER BY match_tickets.created_at DESC
-          LIMIT GREATEST(0, get_match_tickets_count(match_id_var) - get_stadium_capacity(match_id_var))
+          LIMIT GREATEST(0, tickets_to_delete)
         );
         RETURN NEW;
       END;
@@ -83,14 +88,20 @@ return new class extends Migration
     // 2. delete the recent match_tickets until the number of tickets reserved
     // for the match is less than the new stadium capacity
     DB::statement('CREATE OR REPLACE FUNCTION delete_violating_tickets_on_stadium_update_4() RETURNS TRIGGER AS $$
+      DECLARE
+        tickets_to_delete integer;
       BEGIN
+        tickets_to_delete := get_match_tickets_count(OLD.id) - get_stadium_capacity(OLD.id);
+        IF tickets_to_delete IS NULL THEN
+          tickets_to_delete := 0;
+        END IF;
         DELETE FROM match_tickets
         WHERE match_id = OLD.id
         AND id IN (
           SELECT id FROM match_tickets
           WHERE match_id = OLD.id
           ORDER BY created_at DESC
-          LIMIT GREATEST(0, get_match_tickets_count(OLD.id) - get_stadium_capacity(OLD.id))
+          LIMIT GREATEST(0, tickets_to_delete)
         );
         RETURN NEW;
       END;

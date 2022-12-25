@@ -94,7 +94,7 @@ Route::get('team/all', [RefereeController::class, 'getAllTeams'])->name('referee
 Route::get('referee/all', [RefereeController::class, 'getAllReferees'])->name('referee.all');
 
 Route::get('stadium/all', [RefereeController::class, 'getAllStadiums'])->name('referee.all');
-Route::get('stadium/reserved_seats/{stadium_name}/{match_id}', [StadiumController::class, 'getReservedSeatsPerMatch'])->name('stadium.reserved_seats');
+Route::get('stadium/reserved_seats/{stadium_id}/{match_id}', [StadiumController::class, 'getReservedSeatsPerMatch'])->name('stadium.reserved_seats');
 
 // Football Match Routes
 // user can get all matches (by default) or

@@ -25,7 +25,7 @@ class MatchTicketsBuyRequest extends FormRequest
   public function rules()
   {
     return [
-      'match_id' => 'required|integer|exists:matches,id',
+      'match_id' => 'required|integer|exists:football_matches,id',
       'row_number' => 'required|integer|gt:0',
       'seat_number' => 'required|integer|gt:0',
     ];

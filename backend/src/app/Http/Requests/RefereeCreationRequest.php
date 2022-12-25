@@ -33,7 +33,7 @@ class RefereeCreationRequest extends FormRequest
       'referee_email' => [
         'required',
         'email',
-        'unique:referee,referee_email',
+        'unique:referees,referee_email',
       ],
     ];
   }

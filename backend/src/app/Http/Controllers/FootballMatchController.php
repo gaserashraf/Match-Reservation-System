@@ -57,8 +57,8 @@ class FootballMatchController extends Controller
     $teamB_id = $request->teamB_id;
     $stadium_id = $request->stadium_id;
     $referee_id = $request->referee_id;
-    $linsmanA_id = $request->linsmanA_id;
-    $linsmanB_id = $request->linsmanB_id;
+    $linesmanA_id = $request->linesmanA_id;
+    $linesmanB_id = $request->linesmanB_id;
     $date = $request->date;
     $time = $request->time;
     $score = $request->score;
@@ -68,8 +68,8 @@ class FootballMatchController extends Controller
       $teamB_id,
       $stadium_id,
       $referee_id,
-      $linsmanA_id,
-      $linsmanB_id,
+      $linesmanA_id,
+      $linesmanB_id,
       $date,
       $time,
       $score
@@ -99,11 +99,13 @@ class FootballMatchController extends Controller
     $teamB_id = $request->teamB_id;
     $stadium_id = $request->stadium_id;
     $referee_id = $request->referee_id;
-    $linsmanA_id = $request->linsmanA_id;
-    $linsmanB_id = $request->linsmanB_id;
+    $linesmanA_id = $request->linesmanA_id;
+    $linesmanB_id = $request->linesmanB_id;
     $date = $request->date;
     $time = $request->time;
     $score = $request->score;
+
+    // dd($request->all());
 
     $footballMatch = $footballMatchService->updateMatch(
       $match_id,
@@ -111,8 +113,8 @@ class FootballMatchController extends Controller
       $teamB_id,
       $stadium_id,
       $referee_id,
-      $linsmanA_id,
-      $linsmanB_id,
+      $linesmanA_id,
+      $linesmanB_id,
       $date,
       $time,
       $score
