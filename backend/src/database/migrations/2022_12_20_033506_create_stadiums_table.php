@@ -15,7 +15,7 @@ return new class extends Migration
   {
     Schema::create('stadiums', function (Blueprint $table) {
       $table->id();
-      $table->string('stadium_name')->primary();
+      $table->string('stadium_name')->unique();
       $table->integer('number_of_rows');
       $table->integer('number_of_seats_per_row');
       $table->timestamps();

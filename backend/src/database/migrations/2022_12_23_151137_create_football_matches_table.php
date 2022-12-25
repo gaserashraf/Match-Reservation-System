@@ -68,10 +68,27 @@ return new class extends Migration
       // each stadium should host one match per day
       // TODO: can relax this later, such that having a match every maybe 4 hours is ok
       $table->unique(['stadium_id', 'date']);
-
-      // teamA_id and teamB_id can't be the same for same row, add psql constraint
-      DB::statement('ALTER TABLE football_matches ADD CONSTRAINT teamA_id_not_equal_teamB_id CHECK (teamA_id != teamB_id)');
     });
+
+    // teamA_id and teamB_id can't be the same for same row, add psql constraint
+    DB::statement('ALTER TABLE football_matches
+      ADD CONSTRAINT teamA_id_not_equal_teamB_id
+      CHECK ("teamA_id" != "teamB_id")
+    ');
+
+    // referee_id, linesmanA_id and linesmanB_id can't be the same for same row, add psql constraint
+    DB::statement('ALTER TABLE football_matches
+      ADD CONSTRAINT referee_id_not_equal_linesmanA_id
+      CHECK ("referee_id" != "linesmanA_id")
+    ');
+    DB::statement('ALTER TABLE football_matches
+      ADD CONSTRAINT referee_id_not_equal_linesmanB_id
+      CHECK ("referee_id" != "linesmanB_id")
+    ');
+    DB::statement('ALTER TABLE football_matches
+      ADD CONSTRAINT linesmanA_id_not_equal_linesmanB_id
+      CHECK ("linesmanA_id" != "linesmanB_id")
+    ');
   }
 
   /**
