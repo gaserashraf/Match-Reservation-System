@@ -16,24 +16,8 @@ class TeamFactory extends Factory
    */
   public function definition()
   {
-    $football_teams = $this->faker->randomElement([
-      'Arsenal',
-      'Chelsea',
-      'Liverpool',
-      'Manchester-City',
-      'Manchester-United',
-      'Tottenham-Hotspur',
-      'Everton',
-      'Sheffield-United',
-      'Burnley',
-      'Southampton',
-      'Newcastle-United',
-      'Brighton-and-Hove-Albion',
-      'Fulham',
-      'West-Bromwich-Albion',
-    ]);
     return [
-      'team_name' => $football_teams,
+      'team_name' => $this->faker->unique()->word,
     ];
   }
 }
