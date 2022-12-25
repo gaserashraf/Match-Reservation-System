@@ -47,7 +47,7 @@ Route::group(['prefix' => 'admin'], function () {
 /*
  * Manager Specific Routes 
  */
-Route::group(['middleware' => ['auth:api', 'verified', 'role:1']], function () {
+Route::group(['middleware' => ['auth:api', 'role:1']], function () {
   // edit profile
   Route::put('/update/profile', [UserController::class, 'editProfile'])->name('user.edit');
   // Team Routes
@@ -76,7 +76,7 @@ Route::group(['middleware' => ['auth:api', 'verified', 'role:1']], function () {
 /*
  * Customer Specific Routes 
  */
-Route::group(['middleware' => ['auth:api', 'verified', 'role:2']], function () {
+Route::group(['middleware' => ['auth:api', 'role:2']], function () {
   // edit profile
   Route::put('/update/profile', [UserController::class, 'editProfile'])->name('user.edit');
   // Match Tickets Routes
