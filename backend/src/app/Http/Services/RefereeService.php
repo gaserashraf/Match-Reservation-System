@@ -10,9 +10,9 @@ class RefereeService
   /**
    * any user can show all referees
    *
-   * @return Referee | null
+   * @return Collection | null
    */
-  public function getAllReferees() : ?Referee
+  public function getAllReferees()
   {
     $referees = Referee::all();
     if (!$referees) {

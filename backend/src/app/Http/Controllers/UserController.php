@@ -89,11 +89,11 @@ class UserController extends Controller
    * @param UserUpdateRequest $request
    * @return Json
    */
-  public function update(UserUpdateRequest $request)
+  public function editProfile(UserUpdateRequest $request)
   {
     $request->validated();
     $userService = new UserService();
-    $updatedUser = $userService->updateProfile(
+    $updatedUser = $userService->editProfile(
       $request->first_name,
       $request->last_name,
       $request->birth_date,

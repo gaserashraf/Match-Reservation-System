@@ -17,7 +17,7 @@ class AdminService
    */
   public function getUsers(bool $allowed = false)
   {
-    return User::where('role', '!=', 0)->where('allowed', false)->get();
+    return User::where('role', '!=', 0)->where('allowed', $allowed)->get();
   }
 
   /**

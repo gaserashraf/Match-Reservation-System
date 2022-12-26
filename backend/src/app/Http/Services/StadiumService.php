@@ -13,7 +13,7 @@ class StadiumService
    * 
    * @return Collection | null
    */
-  public function getAllStadiums(): ?Collection
+  public function getAllStadiums()
   {
     $stadiums = Stadium::all();
     if (!$stadiums) {

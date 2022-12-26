@@ -121,7 +121,7 @@ class UserService
    *
    * @return User
    */
-  public function updateProfile(
+  public function editProfile(
     ?string $first_name,
     ?string $last_name,
     ?string $birth_date,
