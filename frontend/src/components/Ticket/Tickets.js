@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import TicketCard from "./TicketCard";
+import { AlertContext } from "../../contexts/AlertContext";
+import { deleteTicket } from "./Service.js";
 const Tickets = () => {
+  const alertContext = useContext(AlertContext);
   let ticketsArr = [
     {
       id: 1,
@@ -15,17 +18,17 @@ const Tickets = () => {
       seatNumber: "1",
     },
     {
-        id: 1,
-        matchId: 1,
-        rowSeat: "0",
-        seatNumber: "0",
-      },
-      {
-        id: 2,
-        matchId: 1,
-        rowSeat: "0",
-        seatNumber: "1",
-      },
+      id: 3,
+      matchId: 1,
+      rowSeat: "0",
+      seatNumber: "0",
+    },
+    {
+      id: 4,
+      matchId: 1,
+      rowSeat: "0",
+      seatNumber: "1",
+    },
   ];
   const [tickets, setTickets] = useState([]);
   // TODO: get tickets from backend
@@ -34,8 +37,13 @@ const Tickets = () => {
   }, []);
 
   const handleDelete = (id) => {
-    console.log(id);
-  }
+    if (deleteTicket(id)) {
+      alertContext.setAlert("Ticket canceled successfully!", "success");
+      setTickets(tickets.filter((ticket) => ticket.id !== id));
+    } else {
+      alertContext.setAlert("Error canceling ticket", "error");
+    }
+  };
   return (
     <div>
       <h1 className="mb-5 text-left">My Tickets</h1>

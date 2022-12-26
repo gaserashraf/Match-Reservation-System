@@ -10,24 +10,28 @@ import Select from "@mui/material/Select";
 import Button from "@mui/material/Button";
 import { handleUpdateProfile } from "./Service";
 import { AlertContext } from "../../contexts/AlertContext";
+import moment from "moment";
+
 const EditProfile = (props) => {
   const alertContext = useContext(AlertContext);
-  const [firstName, setFirstName] = React.useState("gaser");
-  const [lastName, setLastName] = React.useState("ashraf");
-  const [email, setEmail] = React.useState("gaser@gmail.com");
-  const [username, setUsername] = React.useState("gaserashraf");
+  let user = JSON.parse(localStorage.getItem("user"));
+  console.log(user);
+  const [firstName, setFirstName] = React.useState(user.firstName);
+  const [lastName, setLastName] = React.useState(user.lastName);
+  const [email, setEmail] = React.useState(user.email);
+  const [username, setUsername] = React.useState(user.username);
   const [password, setPassword] = React.useState("");
-  const [country, setCountry] = React.useState("egypt");
+  const [country, setCountry] = React.useState(user.country);
 
-  const [date, setDate] = React.useState(new Date("2022-03-25"));
+  const [date, setDate] = React.useState(moment(user.date));
   const handleChangeDate = (newValue) => {
     setDate(newValue);
   };
-  const [gender, setGender] = React.useState("male");
+  const [gender, setGender] = React.useState(user.gender);
   const handleChangeGender = (event) => {
     setGender(event.target.value);
   };
-  const [role, setRole] = React.useState("fan");
+  const [role, setRole] = React.useState(user.role);
   const handleChangeRole = (event) => {
     setRole(event.target.value);
   };
@@ -40,12 +44,8 @@ const EditProfile = (props) => {
       password,
       country,
     };
-    if (handleUpdateProfile(user)) {
-      alertContext.setAlert("Profile updated successfully", "success");
-      
-    } else {
-      alertContext.setAlert("Profile updated failed", "error");
-    }
+    handleUpdateProfile(user, alertContext);
+
     props.onClose();
   };
   return (
@@ -159,8 +159,8 @@ const EditProfile = (props) => {
                   label="Age"
                   onChange={handleChangeGender}
                 >
-                  <MenuItem value={"male"}>Male</MenuItem>
-                  <MenuItem value={"female"}>Female</MenuItem>
+                  <MenuItem value={"Male"}>Male</MenuItem>
+                  <MenuItem value={"Female"}>Female</MenuItem>
                 </Select>
               </FormControl>
             </div>
@@ -175,8 +175,8 @@ const EditProfile = (props) => {
                   label="Role"
                   onChange={handleChangeRole}
                 >
-                  <MenuItem value={"manager"}>Manager</MenuItem>
-                  <MenuItem value={"fan"}>Fan</MenuItem>
+                  <MenuItem value={"Manger"}>Manager</MenuItem>
+                  <MenuItem value={"Fan"}>Fan</MenuItem>
                 </Select>
               </FormControl>
             </div>{" "}

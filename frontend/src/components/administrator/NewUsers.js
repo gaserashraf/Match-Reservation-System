@@ -1,71 +1,67 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import UserCard from "./UserCard";
-import { handleAccpetNewUser, handleRejectNewUser } from "./Service";
+import { handleAccpetNewUser, getNewUsers, handelDeleteUser } from "./Service";
 import { AlertContext } from "../../contexts/AlertContext";
 const NewUsers = () => {
   const alertContext = useContext(AlertContext);
 
-  let users = [
-    {
-      name: "Gaser",
-      username: "twix",
-      city: "giza",
-      email: "gaser@gmail.com",
-      gender: "male",
-      role: "manger",
-      birthday: "1-11-2000",
-    },
-    {
-      name: "Gaser Ashraf",
-      username: "twix",
-      city: "giza",
-      email: "gaser@gmail.com",
-      gender: "male",
-      role: "manger",
-      birthday: "1-11-2000",
-    },
-    {
-      name: "Gaser Ashraf",
-      username: "twix",
-      city: "giza",
-      email: "gaser@gmail.com",
-      gender: "male",
-      role: "manger",
-      birthday: "1-11-2000",
-    },
-    {
-      name: "Gaser Ashraf",
-      username: "twix",
-      city: "giza",
-      email: "gaser@gmail.com",
-      gender: "male",
-      role: "manger",
-      birthday: "1-11-2000",
-    },
-    {
-      name: "Gaser Ashraf",
-      username: "twix",
-      city: "giza",
-      email: "gaser@gmail.com",
-      gender: "male",
-      role: "manger",
-      birthday: "1-11-2000",
-    },
-  ];
+  let [users, setUsers] = React.useState([]);
+  // let usersArr = [
+  //   {
+  //     name: "Gaser",
+  //     username: "twix",
+  //     city: "giza",
+  //     email: "gaser@gmail.com",
+  //     gender: "male",
+  //     role: "manger",
+  //     birthday: "1-11-2000",
+  //   },
+  //   {
+  //     name: "Gaser Ashraf",
+  //     username: "twix",
+  //     city: "giza",
+  //     email: "gaser@gmail.com",
+  //     gender: "male",
+  //     role: "manger",
+  //     birthday: "1-11-2000",
+  //   },
+  //   {
+  //     name: "Gaser Ashraf",
+  //     username: "twix",
+  //     city: "giza",
+  //     email: "gaser@gmail.com",
+  //     gender: "male",
+  //     role: "manger",
+  //     birthday: "1-11-2000",
+  //   },
+  //   {
+  //     name: "Gaser Ashraf",
+  //     username: "twix",
+  //     city: "giza",
+  //     email: "gaser@gmail.com",
+  //     gender: "male",
+  //     role: "manger",
+  //     birthday: "1-11-2000",
+  //   },
+  //   {
+  //     name: "Gaser Ashraf",
+  //     username: "twix",
+  //     city: "giza",
+  //     email: "gaser@gmail.com",
+  //     gender: "male",
+  //     role: "manger",
+  //     birthday: "1-11-2000",
+  //   },
+  // ];
+  useEffect(() => {
+    getNewUsers(setUsers);
+  }, []);
 
   const handleOk = (user) => {
-    if (handleAccpetNewUser(user)) {
-      alertContext.setAlert("user has been accepted", "success");
-    } else {
-      alertContext.setAlert("error in accepting user", "error");
-    }
+    handleAccpetNewUser(user, alertContext, setUsers, users);
   };
   const handleNo = (user) => {
-    if (handleRejectNewUser(user)) {
-      alertContext.setAlert("user has been rejected", "success");
-    } else {
-      alertContext.setAlert("error in rejecting user", "error");
-    }
+    handelDeleteUser(user, alertContext, setUsers, users);
   };
 
   return (

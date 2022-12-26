@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import AddStadiumFrom from "./AddStadiumFrom";
 import StadiumCard from "./StadiumCard";
+import { getAllStaduims } from "./Service";
 const Stadiums = () => {
   const AddStadiumModal = {
     position: "absolute",
@@ -19,47 +20,54 @@ const Stadiums = () => {
   const handleOpen = () => setOpenAddStadium(true);
   const handleClose = () => setOpenAddStadium(false);
 
-  const stadiumsArr = [
-    {
-      id: 1,
-      name: "Al Bayt Stadium",
-      rows: 10,
-      seatsPerRow: 10,
-    },
-    {
-      id: 2,
-      name: "Al Janoub Stadium",
-      rows: 10,
-      seatsPerRow: 9,
-    },
-    {
-      id: 3,
-      name: "Al Wakrah Stadium",
-      rows: 5,
-      seatsPerRow: 10,
-    },
-    {
-      id: 4,
-      name: "Al Bayt Stadium",
-      rows: 10,
-      seatsPerRow: 10,
-    },
-    {
-      id: 5,
-      name: "Al Janoub Stadium",
-      rows: 10,
-      seatsPerRow: 9,
-    },
-  ];
-  const [stadiums, setStadiums] = useState(stadiumsArr);
+  // const stadiumsArr = [
+  //   {
+  //     id: 1,
+  //     name: "Al Bayt Stadium",
+  //     rows: 10,
+  //     seatsPerRow: 10,
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Al Janoub Stadium",
+  //     rows: 10,
+  //     seatsPerRow: 9,
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Al Wakrah Stadium",
+  //     rows: 5,
+  //     seatsPerRow: 10,
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Al Bayt Stadium",
+  //     rows: 10,
+  //     seatsPerRow: 10,
+  //   },
+  //   {
+  //     id: 5,
+  //     name: "Al Janoub Stadium",
+  //     rows: 10,
+  //     seatsPerRow: 9,
+  //   },
+  // ];
+  const [stadiums, setStadiums] = useState([]);
+  useEffect(() => {
+    getAllStaduims(setStadiums);
+  }, []);
+
+  let user = JSON.parse(localStorage.getItem("user"));
   return (
     <div>
       <h1 className="mb-5 text-left">Stadiums</h1>
       <div className="row justify-content-center mb-2">
         <div className="col-md-12 d-flex flex-wrap justify-content-between">
-          <button className="btn btn-dark" onClick={handleOpen}>
-            Add Stadium
-          </button>
+          {user.role === "Manager" && (
+            <button className="btn btn-dark" onClick={handleOpen}>
+              Add Stadium
+            </button>
+          )}
           <Modal
             open={openAddStadium}
             onClose={handleClose}
@@ -84,7 +92,7 @@ const Stadiums = () => {
                 key={stadium.id}
                 id={stadium.id}
                 name={stadium.name}
-                numberOfSeats={(stadium.rows * stadium.seatsPerRow)}
+                numberOfSeats={stadium.rows * stadium.seatsPerRow}
               />
             </div>
           );

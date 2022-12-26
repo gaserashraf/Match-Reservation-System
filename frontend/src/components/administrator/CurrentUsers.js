@@ -1,63 +1,68 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import UserCard from "./UserCard";
 import { AlertContext } from "../../contexts/AlertContext";
-import { handelDeleteUser } from "./Service";
+import { handelDeleteUser, getCurrentUsers } from "./Service";
+import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
+
 const CurrentUsers = () => {
   const alertContext = useContext(AlertContext);
+  let [users, setUsers] = React.useState([]);
+  let [loading, setLoading] = React.useState(true);
+  // let usersArr = [
+  //   {
+  //     name: "Gaser Ashraf",
+  //     username: "twix",
+  //     city: "giza",
+  //     email: "gaser@gmail.com",
+  //     gender: "male",
+  //     role: "manger",
+  //     birthday: "1-11-2000",
+  //   },
+  //   {
+  //     name: "Gaser Ashraf",
+  //     username: "twix",
+  //     city: "giza",
+  //     email: "gaser@gmail.com",
+  //     gender: "male",
+  //     role: "manger",
+  //     birthday: "1-11-2000",
+  //   },
+  //   {
+  //     name: "Gaser Ashraf",
+  //     username: "twix",
+  //     city: "giza",
+  //     email: "gaser@gmail.com",
+  //     gender: "male",
+  //     role: "manger",
+  //     birthday: "1-11-2000",
+  //   },
+  //   {
+  //     name: "Gaser Ashraf",
+  //     username: "twix",
+  //     city: "giza",
+  //     email: "gaser@gmail.com",
+  //     gender: "male",
+  //     role: "manger",
+  //     birthday: "1-11-2000",
+  //   },
+  //   {
+  //     name: "Gaser Ashraf",
+  //     username: "twix",
+  //     city: "giza",
+  //     email: "gaser@gmail.com",
+  //     gender: "male",
+  //     role: "manger",
+  //     birthday: "1-11-2000",
+  //   },
+  // ];
+  useEffect(() => {
+    getCurrentUsers(setUsers);
+    console.log("curr");
+  }, []);
 
-  let users = [
-    {
-      name: "Gaser Ashraf",
-      username: "twix",
-      city: "giza",
-      email: "gaser@gmail.com",
-      gender: "male",
-      role: "manger",
-      birthday: "1-11-2000",
-    },
-    {
-      name: "Gaser Ashraf",
-      username: "twix",
-      city: "giza",
-      email: "gaser@gmail.com",
-      gender: "male",
-      role: "manger",
-      birthday: "1-11-2000",
-    },
-    {
-      name: "Gaser Ashraf",
-      username: "twix",
-      city: "giza",
-      email: "gaser@gmail.com",
-      gender: "male",
-      role: "manger",
-      birthday: "1-11-2000",
-    },
-    {
-      name: "Gaser Ashraf",
-      username: "twix",
-      city: "giza",
-      email: "gaser@gmail.com",
-      gender: "male",
-      role: "manger",
-      birthday: "1-11-2000",
-    },
-    {
-      name: "Gaser Ashraf",
-      username: "twix",
-      city: "giza",
-      email: "gaser@gmail.com",
-      gender: "male",
-      role: "manger",
-      birthday: "1-11-2000",
-    },
-  ];
   const handleNo = (user) => {
-    if (handelDeleteUser(user)) {
-      alertContext.setAlert("user has been deleted", "success");
-    } else {
-      alertContext.setAlert("user has not been deleted", "error");
-    }
+    handelDeleteUser(user, alertContext, setUsers, users);
   };
 
   return (

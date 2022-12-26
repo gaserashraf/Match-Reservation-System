@@ -11,6 +11,8 @@ import Button from "@mui/material/Button";
 import { handleRegister } from "./Service";
 import { Link } from "react-router-dom";
 import { AlertContext } from "../../contexts/AlertContext";
+import moment from "moment";
+
 const Register = () => {
   const alertContext = useContext(AlertContext);
   const [firstName, setFirstName] = React.useState("");
@@ -20,7 +22,7 @@ const Register = () => {
   const [password, setPassword] = React.useState("");
   const [country, setCountry] = React.useState("");
 
-  const [date, setDate] = React.useState(new Date("2022-03-25"));
+  const [date, setDate] = React.useState(moment("2022-03-25"));
   const handleChangeDate = (newValue) => {
     setDate(newValue);
   };
@@ -48,6 +50,29 @@ const Register = () => {
       alertContext.setAlert("Please fill all the fields", "error");
       return;
     }
+    // check if password is strong enough
+    if (password.length < 8) {
+      alertContext.setAlert("Password must be at least 8 characters", "error");
+      return;
+    }
+    // check if password have one Uppercase, one lowercase and one number
+    if (
+      !password.match(/[a-z]/g) ||
+      !password.match(/[A-Z]/g) ||
+      !password.match(/[0-9]/g)
+    ) {
+      alertContext.setAlert(
+        "Password must contain at least one Uppercase, one lowercase and one number",
+        "error"
+      );
+      return;
+    }
+    // check if email is valid
+    if (!email.includes("@")) {
+      alertContext.setAlert("Please enter a valid email", "error");
+      return;
+    }
+
     let user = {
       firstName,
       lastName,
@@ -59,7 +84,17 @@ const Register = () => {
       gender,
       role,
     };
-    handleRegister(user);
+    handleRegister(user, alertContext);
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setUsername("");
+    setPassword("");
+    setCountry("");
+    setDate("");
+    setGender("");
+    setRole("");
+
   };
 
   return (
@@ -171,8 +206,8 @@ const Register = () => {
                   label="Age"
                   onChange={handleChangeGender}
                 >
-                  <MenuItem value={"male"}>Male</MenuItem>
-                  <MenuItem value={"female"}>Female</MenuItem>
+                  <MenuItem value={"Male"}>Male</MenuItem>
+                  <MenuItem value={"Female"}>Female</MenuItem>
                 </Select>
               </FormControl>
             </div>
@@ -186,8 +221,8 @@ const Register = () => {
                   label="Role"
                   onChange={handleChangeRole}
                 >
-                  <MenuItem value={"manager"}>Manager</MenuItem>
-                  <MenuItem value={"fan"}>Fan</MenuItem>
+                  <MenuItem value={"Manager"}>Manager</MenuItem>
+                  <MenuItem value={"Fan"}>Fan</MenuItem>
                 </Select>
               </FormControl>
             </div>{" "}

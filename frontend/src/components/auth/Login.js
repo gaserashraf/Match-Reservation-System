@@ -15,7 +15,7 @@ const Login = () => {
 
       return;
     }
-    handleLogin(email, password);
+    handleLogin(email, password, alertContext);
   };
 
   return (

@@ -6,7 +6,6 @@ import Snackbar from "@mui/material/Snackbar";
 
 const CustomAlert = () => {
   const alertContext = useContext(AlertContext);
-  console.log(alertContext.alerts);
   const vertical = "top";
   const horizontal = "right";
   return (

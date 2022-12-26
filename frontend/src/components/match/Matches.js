@@ -1,9 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext,useEffect } from "react";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import AddMatchFrom from "./AddMatchForm";
 import MatchCard from "./MatchCard";
 import { AlertContext } from "../../contexts/AlertContext";
+import { getAllMatchs } from "./Service";
 const Matches = () => {
   const alertContext = useContext(AlertContext);
 
@@ -59,7 +60,12 @@ const Matches = () => {
       dateAndTime: "2022-08-18T21:11:54",
     },
   ];
-  const [matchs, setMatchs] = useState(matchsArr);
+  const [matchs, setMatchs] = useState([]);
+  useEffect(() => {
+    getAllMatchs(setMatchs);
+    console.log(matchs);
+  }, []);
+
   const handleDelete = (match) => {
     //console.log(match);
 

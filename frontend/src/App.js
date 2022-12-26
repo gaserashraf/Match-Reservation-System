@@ -18,7 +18,7 @@ import Stadiums from "./components/stadium/Stadiums";
 import Matches from "./components/match/Matches";
 import Match from "./components/match/Match";
 import Tickets from "./components/Ticket/Tickets";
-import './index.css'
+import "./index.css";
 function App() {
   return (
     <div className="App">
@@ -37,12 +37,11 @@ function App() {
                     path="administrator/currentusers"
                     element={<CurrentUsers />}
                   />
-
-                  <Route path="/stadiums" element={<Stadiums />} />
-                  <Route path="/tickets" element={<Tickets />} />
-                  <Route path="/matchs" element={<Matches />} />
-                  <Route path="/matchs/:id" element={<Match />} />
                 </Route>
+                <Route path="/stadiums" element={<Stadiums />} />
+                <Route path="/tickets" element={<Tickets />} />
+                <Route path="/matchs" element={<Matches />} />
+                <Route path="/matchs/:id" element={<Match />} />
                 <Route exact path="register" element={<Register />} />
                 <Route exact path="login" element={<Login />} />
                 <Route path="*" element={<NotFound />} />

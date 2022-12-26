@@ -4,6 +4,7 @@ import Button from "@mui/material/Button";
 import { handleAddStadium } from "./Service";
 import { AlertContext } from "../../contexts/AlertContext";
 const AddStadiumFrom = (props) => {
+  let { stadiums, setStadiums, onClose } = props;
   const alertContext = useContext(AlertContext);
   const [name, setName] = React.useState("");
   const [rows, setRows] = React.useState("");
@@ -20,14 +21,9 @@ const AddStadiumFrom = (props) => {
       rows,
       seatsPerRow,
     };
-  
-    if (handleAddStadium(stadium)) {
-      alertContext.setAlert("Stadium added successfully", "success");
-      props.setStadiums([...props.stadiums, stadium]);
-    } else {
-      alertContext.setAlert("Stadium added failed", "error");
-    }
-    props.onClose();
+
+    handleAddStadium(stadium, setStadiums, stadiums, alertContext);
+    onClose();
   };
   return (
     <div>
