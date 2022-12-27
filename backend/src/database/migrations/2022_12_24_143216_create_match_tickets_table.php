@@ -39,7 +39,7 @@ return new class extends Migration
     // we can use the function in the constraint - psql constraint
     DB::statement('ALTER TABLE match_tickets
       ADD CONSTRAINT match_tickets_count_check
-      CHECK (get_match_tickets_count(match_id) < get_stadium_capacity(match_id));
+      CHECK (get_match_tickets_count(match_id) == 0 OR get_match_tickets_count(match_id) < get_stadium_capacity(match_id));
     ');
 
     // add constraint that the row number for each match should be less than the stadium rows

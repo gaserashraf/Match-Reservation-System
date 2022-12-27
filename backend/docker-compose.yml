@@ -15,11 +15,11 @@ services:
       
   # Adminer is a good way 
   # to see the sql tables in developent
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - "${ADMINER_PORT}:8080"
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - "${ADMINER_PORT}:8080"
 
   # FTP Apache Service -- to simulate uploading files to external place
   # apache-ftpd:
