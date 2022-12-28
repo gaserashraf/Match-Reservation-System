@@ -1,30 +1,108 @@
-## Project setup
+# Match Reservation System
+
+<div name="header" align="center">
+
+<img width=20% src="./ss/logo.PNG" alt="logo"></a>
+
+   </div>
+<p align="center">
+  <a href="" rel="noopener">
+</p>
+<p align="center">  Match Reservation System
+    <br> 
+</p>
+<div align="center">
+  
+[![GitHub contributors](https://img.shields.io/github/contributors/gaserashraf/Match-Reservation-System)](https://github.com/gaserashraf/Match-Reservation-System/contributors)
+[![GitHub issues](https://img.shields.io/github/issues/gaserashraf/Match-Reservation-System)](https://github.com/gaserashraf/Match-Reservation-System/issues)
+[![GitHub forks](https://img.shields.io/github/forks/gaserashraf/Match-Reservation-System)](https://github.com/gaserashraf/Match-Reservation-System/network)
+[![GitHub stars](https://img.shields.io/github/stars/gaserashraf/Match-Reservation-System)](https://github.com/gaserashraf/Match-Reservation-System/stargazers)
+[![GitHub license](https://img.shields.io/github/license/Match-Reservation-System/Match-Reservation-System)](https://github.com/CMPLR-Technologies/Match-Reservation-System/blob/master/LICENSE)
+
+</div>
+
+## 📝 Table of Contents
+
+- [About](#about)
+- [Get started](#Install)
+- [Technology](#tech)
+- [Screenshots](#Screenshots)
+
+## 📙 About <a name = "about"></a>
+
+An online automated ticket reservation system for football matches in FIFA
+World Cup Qatar 2022
+
+## 🏁 Get Started <a name = "Install"></a>
+
+1. **Clone the repository**
+
 ```
-npm install
-npm i react-scripts
+https://github.com/gaserashraf/Match-Reservation-System.git
 ```
 
-### Run
 ```
-node service/index.js
-```
-### Run the System
-```
-docker-compose up
-```
-Docker will pull the MySQL and Node.js images (if our machine does not have it before).
-
-The services can be run on the background with command:
-```
-docker-compose up -d
+cd Match-Reservation-System
 ```
 
-### Stop the System
-Stopping all the running containers is also simple with a single command:
 ```
-docker-compose down
+cd frontend
 ```
-If you need to stop and remove all containers, networks, and all images used by any service in docker-compose.yml file, use the command:
+
+2. **Running**
+
 ```
-docker-compose down --rmi all
+npm i
 ```
+
+```
+npm start
+```
+
+go to your browser and go to http://localhost:5000/
+
+## 💻 Built Using <a name = "tech"></a>
+
+- **React.js**
+- **PHP**
+- **Laravel**
+- **Bootstrap**
+
+## 📷 Demo Screenshots
+
+<div name="Screenshots" align="center">
+   <img width=100% src="./ss/home.PNG" alt="logo"></a>
+    <h2 align='left'>Admin role</h2>
+    <h3 align='left'>users</h3>
+    <img width=100% src="ss/admin.PNG" alt="logo"></a>
+    <img width=100% src="ss/admin.gif" alt="logo"></a>
+   <hr>
+    <h2 align='left'>Manager role</h2>
+    <h3 align='left'>Stadiums</h3>
+    <img width=100% src="ss/stadiums.PNG" alt="logo"></a>
+    <img width=100% src="ss/addStadium.gif" alt="logo"></a>
+   <hr>
+   
+   <h3 align='left'>Matches</h3>
+    <img width=100% src="ss/addMatch.gif" alt="logo"></a>
+   <hr>
+    <h2 align='left'>Customer role</h2>
+    <img width=100% src="ss/matchs.PNG" alt="logo"></a>
+    <h3 align='left'>Match page</h3>
+    <img width=100% src="ss/match.PNG" alt="logo"></a>
+     <h3 align='left'>Buy a ticket</h3>
+    <img width=100% src="ss/buyTicket.gif" alt="logo"></a>
+    <h3 align='left'>cancel a ticket</h3>
+    <img width=100% src="ss/cancelTicket.gif" alt="logo"></a>
+   <hr>
+    <h3 align='left'>Update profile</h3>
+    <img width=100% src="ss/editprofile.PNG" alt="logo"></a>
+    <hr>
+    <h3 align='left'>Signup & Login</h3>
+    <img width=100% src="ss/reg.PNG" alt="logo"></a>
+    <img width=100% src="ss/login.PNG" alt="logo"></a>
+    <hr>
+    <h3 align='left'>fully responsive</h3>
+    <img width=40% src="ss/res1.PNG" alt="logo"></a>
+    <img width=40% src="ss/res2.PNG" alt="logo"></a>
+</div>
