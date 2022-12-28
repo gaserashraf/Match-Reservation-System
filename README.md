@@ -2,7 +2,7 @@
 
 <div name="header" align="center">
 
-<img width=20% src="./ss/logo.PNG" alt="logo"></a>
+<img width=20% src="ss/logo.png" alt="logo"></a>
 
    </div>
 <p align="center">
