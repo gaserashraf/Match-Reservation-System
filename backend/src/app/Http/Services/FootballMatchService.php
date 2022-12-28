@@ -161,22 +161,22 @@ class FootballMatchService
    * only manager (role = 1) can delete a match
    *
    * @param int $match_id
-   * @return bool
+   * @return ?FootballMatch
    */
-  public function deleteMatch(int $match_id): bool
+  public function deleteMatch(int $match_id): ?FootballMatch
   {
     $match = FootballMatch::find($match_id)->first();
     if (!$match) {
-      return false;
+      return null;
     }
     try {
       DB::beginTransaction();
       $match->delete();
       DB::commit();
-      return true;
+      return $match;
     } catch (\Illuminate\Database\QueryException $ex) {
       DB::rollback();
-      return false;
+      return null;
     }
   }
 }
