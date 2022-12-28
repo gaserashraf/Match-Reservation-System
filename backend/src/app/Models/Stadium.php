@@ -39,9 +39,12 @@ class Stadium extends Model
       return null;
     }
     $tickets = $match->tickets()->get();
-    foreach ($tickets as $ticket) {
-      $reserved_seats[$ticket->row_number][] = $ticket->seat_number;
-    }
+    
+    // make it like array of arrays like [[r, s], [r, s], ...]
+    $reserved_seats = $tickets->map(function($ticket) {
+      return [$ticket->row_number, $ticket->seat_number];
+    })->toArray();
+
     $result = [
       'match_id' => $match_id,
       'number_of_rows' => $this->number_of_rows,

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class MatchTicketsService
 {
-  
+
   /**
    * each customer (role = 2) can show all their tickets
    *
@@ -16,7 +16,7 @@ class MatchTicketsService
    */
   public function showAllTickets()
   {
-    $tickets = Auth::user()->tickets();
+    $tickets = Auth::user()->tickets()->get();
     return $tickets;
   }
 
@@ -59,16 +59,14 @@ class MatchTicketsService
     try {
       DB::beginTransaction();
       $match_ticket = Auth::user()->tickets()->where('id', $ticket_id)->first();
-      if(!$match_ticket) {
+      if (!$match_ticket) {
         return false;
       }
       // the customer can cancel the ticket only 3 days before the match date
-      $canCancel = $match_ticket->fbmatch->date->subDays(3)->isPast();
-      if($canCancel) {
-        $match_ticket->delete();
-      } else {
+      if (strtotime($match_ticket->match->match_date) - strtotime(date('Y-m-d')) < 3 * 24 * 60 * 60) {
         return false;
       }
+      $match_ticket->delete();
       DB::commit();
       return true;
     } catch (\Illuminate\Database\QueryException $ex) {

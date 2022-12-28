@@ -26,8 +26,8 @@ class MatchTicketsBuyRequest extends FormRequest
   {
     return [
       'match_id' => 'required|integer|exists:football_matches,id',
-      'row_number' => 'required|integer|gt:0',
-      'seat_number' => 'required|integer|gt:0',
+      'row_number' => 'required|integer|min:0',
+      'seat_number' => 'required|integer|min:0',
     ];
   }
 }
