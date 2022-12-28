@@ -5,11 +5,10 @@ export default function RequireAuth() {
   let location = useLocation();
   console.log(localStorage.getItem("user"));
   // remove the next line and uncomment the next two lines to test the protected route
-  return <Outlet />
   return !localStorage.getItem("user") ? (
     <Navigate to="/login" state={{ from: location }} />
-  ) : !localStorage.getItem("user").role === "administrator" ? (
-    <Navigate to="/home" state={{ from: location }} />
+  ) : localStorage.getItem("user").role !== "administrator" ? (
+    <Navigate to="/" state={{ from: location }} />
   ) : (
     <Outlet />
   );

@@ -94,7 +94,6 @@ const Register = () => {
     setDate("");
     setGender("");
     setRole("");
-
   };
 
   return (
@@ -132,10 +131,11 @@ const Register = () => {
           <div className="col-md-6">
             <TextField
               required
-              id="filled-required"
+              id="filled-email-required"
               label="Email"
               variant="filled"
               className="mr-3"
+              type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               sx={{ width: "100%" }}
@@ -146,7 +146,7 @@ const Register = () => {
           <div className="col-md-6">
             <TextField
               required
-              id="filled-required"
+              id="filled-username-required"
               label="Username"
               variant="filled"
               value={username}

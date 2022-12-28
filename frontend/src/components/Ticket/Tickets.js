@@ -1,56 +1,36 @@
 import React, { useEffect, useState, useContext } from "react";
 import TicketCard from "./TicketCard";
 import { AlertContext } from "../../contexts/AlertContext";
-import { deleteTicket } from "./Service.js";
+import { deleteTicket, getAllTickets } from "./Service.js";
+import CustomLoading from "../loading/CustomLoading";
 const Tickets = () => {
   const alertContext = useContext(AlertContext);
-  let ticketsArr = [
-    {
-      id: 1,
-      matchId: 1,
-      rowSeat: "0",
-      seatNumber: "0",
-    },
-    {
-      id: 2,
-      matchId: 1,
-      rowSeat: "0",
-      seatNumber: "1",
-    },
-    {
-      id: 3,
-      matchId: 1,
-      rowSeat: "0",
-      seatNumber: "0",
-    },
-    {
-      id: 4,
-      matchId: 1,
-      rowSeat: "0",
-      seatNumber: "1",
-    },
-  ];
   const [tickets, setTickets] = useState([]);
+  const [ticketsLoading, setTicketsLoading] = useState(true);
+  let userToken = JSON.parse(localStorage.getItem("user"))?.access_token;
+
   // TODO: get tickets from backend
   useEffect(() => {
-    setTickets(ticketsArr);
+    if (!userToken) {
+      alertContext.setAlert("Please login first", "error");
+      setTicketsLoading(false);
+      return;
+    }
+    getAllTickets(setTickets, setTicketsLoading);
   }, []);
 
   const handleDelete = (id) => {
-    if (deleteTicket(id)) {
-      alertContext.setAlert("Ticket canceled successfully!", "success");
-      setTickets(tickets.filter((ticket) => ticket.id !== id));
-    } else {
-      alertContext.setAlert("Error canceling ticket", "error");
-    }
+    deleteTicket(id, setTickets, tickets, alertContext);
   };
   return (
     <div>
       <h1 className="mb-5 text-left">My Tickets</h1>
-      <div className="row justify-content-center mb-2">
-        <div className="col-md-12 d-flex flex-wrap justify-content-between"></div>
-      </div>
       <div className="row mt-2">
+        {ticketsLoading && <CustomLoading />}
+        {tickets.length === 0 && ticketsLoading === false && userToken && (
+          <h3>You have no tickets</h3>
+        )}
+        {!userToken && <h3>Please login first</h3>}
         {tickets.map((ticket) => (
           <TicketCard
             key={ticket.id}
@@ -58,7 +38,7 @@ const Tickets = () => {
             matchId={ticket.matchId}
             rowSeat={ticket.rowSeat}
             seatNumber={ticket.seatNumber}
-            handleDelete={handleDelete.bind(this, ticket.id)}
+            handleDelete={handleDelete.bind(this, ticket.ticketId)}
           />
         ))}
       </div>

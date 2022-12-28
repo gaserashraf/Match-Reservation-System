@@ -1,11 +1,8 @@
 export const userMapper = (user) => {
   user.date = new Date(user.date);
-  let date =
-    user.date.getFullYear() +
-    "-" +
-    (user.date.getMonth() + 1) +
-    "-" +
-    user.date.getDate();
+  console.log(user.date);
+  const date = user.date.toISOString().split("T")[0];
+
   let userRet = {
     first_name: user.firstName,
     last_name: user.lastName,
@@ -24,7 +21,7 @@ export const userMapperTo = (user) => {
     name: user.first_name + " " + user.last_name,
     username: user.username,
     date: user.birth_date,
-    gender: user.gender === 0 ? "Male" : "Female",
+    gender: user.gender === false ? "Male" : "Female",
     country: user.nationality,
     role: user.role === 1 ? "Manager" : user.role === 2 ? "Fan" : "Admin",
     email: user.email,

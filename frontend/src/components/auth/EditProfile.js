@@ -43,6 +43,8 @@ const EditProfile = (props) => {
       username,
       password,
       country,
+      date,
+      gender,
     };
     handleUpdateProfile(user, alertContext);
 
@@ -175,7 +177,7 @@ const EditProfile = (props) => {
                   label="Role"
                   onChange={handleChangeRole}
                 >
-                  <MenuItem value={"Manger"}>Manager</MenuItem>
+                  <MenuItem value={"Manager"}>Manager</MenuItem>
                   <MenuItem value={"Fan"}>Fan</MenuItem>
                 </Select>
               </FormControl>

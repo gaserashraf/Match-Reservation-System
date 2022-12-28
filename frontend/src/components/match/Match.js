@@ -1,12 +1,15 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
-import Typography from "@mui/material/Typography";
 import flag from "./flag.png";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { AlertContext } from "../../contexts/AlertContext";
+import { getMatch, getReservedSeatsOfMatch } from "./Service";
+import { buyTicket } from "../ticket/Service";
+import moment from "moment";
+import CustomLoading from "../loading/CustomLoading";
 const Match = () => {
   // purchase modal
   const alertContext = useContext(AlertContext);
@@ -26,55 +29,46 @@ const Match = () => {
   };
   const [cardNumber, setCardNumber] = useState();
   const [cardPin, setCardPin] = useState();
-
   const { id } = useParams();
-
   const [match, setMatch] = useState({});
-  let matchTmp = {
-    id: id,
-    team1: "Qatar",
-    team2: "Ecuador",
-    stadium: "Stadium1",
-    mainReferee: "Mohamed",
-    lineReferee1: "Ahmed",
-    lineReferee2: "Ali",
-    dateAndTime: "2022-08-18T21:11:54",
-  };
+  const [matchLoading, setMatchLoading] = useState(false);
 
-  matchTmp.dateAndTime = new Date(matchTmp.dateAndTime);
-
-  let current_date =
-    matchTmp.dateAndTime.getFullYear() +
-    "-" +
-    (matchTmp.dateAndTime.getMonth() + 1) +
-    "-" +
-    matchTmp.dateAndTime.getDate();
-  let current_time =
-    matchTmp.dateAndTime.getHours() + ":" + matchTmp.dateAndTime.getMinutes();
+  const current_date = match?.dateAndTime?.toISOString().split("T")[0];
+  const [imageTeamA, setImageTeamA] = useState(null);
+  const [imageTeamB, setImageTeamB] = useState(null);
 
   useEffect(() => {
-    // To be replaced with API call
-
-    setMatch(matchTmp);
+    getMatch(id, setMatch, setMatchLoading);
   }, []);
-
-  // stadium details
-  let rows = 5;
-  let numberOfSeats = 10;
-  // zero based
-  const reservedSeatsArr = [
-    [0, 1],
-    [2, 3],
-    [3, 0],
-  ];
 
   const [seats, setSeats] = useState([]);
   const [reservedSeats, setReservedSeats] = useState([]);
+  const [reservedSeatsLoading, setReservedSeatsLoading] = useState(false);
   //setReservedSeats(reservedSeatsArr);
   useEffect(() => {
     // TODO: get reserved seats from API
-    setReservedSeats(reservedSeatsArr);
-  }, []);
+    if (matchLoading === true || match === {} || match.matchId === undefined)
+      return;
+    console.log("match", match);
+    getReservedSeatsOfMatch(
+      match.matchId,
+      match.stadiumId,
+      setReservedSeats,
+      setReservedSeatsLoading
+    );
+    const fetchImage = async (name, setImage) => {
+      try {
+        const response = await import(
+          `../../assets/flags/${name.replace(/ /g, "-").toLowerCase()}.png`
+        );
+        setImage(response.default);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchImage(match?.teamAName, setImageTeamA);
+    fetchImage(match?.teamBName, setImageTeamB);
+  }, [match]);
 
   // TODO: sent to API
   const handlePurchase = () => {
@@ -94,13 +88,30 @@ const Match = () => {
 
     handleClose();
     // if reserved successfully
-    alertContext.setAlert("Purchase successful", "success");
-    setReservedSeats([...reservedSeats, ...seats]);
-    setSeats([]);
-    setCardNumber("");
-    setCardPin("");
+    let ticket = {
+      matchId: match.matchId,
+      seat: seats[0],
+    };
+    buyTicket(
+      ticket,
+      setReservedSeats,
+      reservedSeats,
+      setSeats,
+      setCardNumber,
+      setCardPin,
+      alertContext
+    );
   };
+  let user = JSON.parse(localStorage.getItem("user"));
   const handleSeatClick = (i, j) => {
+    if (user.role !== "Fan") {
+      alertContext.setAlert("You are not a customer", "error");
+      return;
+    }
+    if (seats.length === 1) {
+      alertContext.setAlert("You can only select one seat", "error");
+      return;
+    }
     //check if it is reserved
     for (let z = 0; z < reservedSeats.length; z++) {
       if (reservedSeats[z][0] === i && reservedSeats[z][1] === j) {
@@ -122,6 +133,7 @@ const Match = () => {
     setSeats(seats.filter((seat) => seat[0] !== i || seat[1] !== j));
   };
   const getSeatColor = (row, seat) => {
+    if (reservedSeatsLoading === true) return "yellow";
     for (let i = 0; i < reservedSeats.length; i++) {
       if (reservedSeats[i][0] === row && reservedSeats[i][1] === seat) {
         return "red";
@@ -152,179 +164,193 @@ const Match = () => {
   };
   return (
     <div className="py-3">
-      <div className="row align-items-center">
-        <div className="col-4">
-          <h5>
-            <div>
-              <img src={flag} alt="flag" className="w-100" />
-            </div>
-            {match.team1}
-          </h5>
-        </div>
-        <div className="col-4">
-          <div className="row justify-content-center align-items-start mb-3">
-            <h3 style={{fontSize:"50px"}}>
-              {current_time}
-              <h6 style={{ fontSize: "20px" }}>{current_date}</h6>
-            </h3>
-          </div>
-          <div
-            className="row justify-content-center align-items-center"
-            style={{ fontSize: "25px" }}
-          >
-            <i className="fas fa-ticket-alt mr-2"></i>
-            {match.stadium}
-          </div>
-          <div
-            className="row justify-content-center align-items-center"
-            style={{ fontSize: "25px" }}
-          >
-            <i className="fas fa-flag mr-2"></i>
-            {match.mainReferee}
-          </div>
-          <div
-            className="row justify-content-center align-items-center"
-            style={{ fontSize: "25px" }}
-          >
-            <i className="far fa-flag mr-2"></i>
-            {match.lineReferee1} <i className="ml-3 far fa-flag mr-2"></i>
-            {match.lineReferee2}
-          </div>
-        </div>
-        <div className="col-4">
-          <Typography variant="h5" component="div" style={{ fontSize: "20px" }}>
-            <div>
-              <img src={flag} alt="flag" className="w-100" />
-            </div>
-            {match.team2}
-          </Typography>
-        </div>
-      </div>
-
-      <div className="row justify-content-center  mt-5">
-        <div className="col-md-9 col-12">
-          {[...Array(rows)].map((x, i) => {
-            return (
-              <div className="row justify-content-center">
-                <div
-                  className={`mr-1 ${
-                    i === 0 ? "d-flex align-items-center" : ""
-                  }`}
-                >
-                  {i}
+      {matchLoading ? (
+        <CustomLoading />
+      ) : (
+        <>
+          <div className="row align-items-center">
+            <div className="col-4">
+              <h5>
+                <div>
+                  <img
+                    src={imageTeamA ? imageTeamA : flag}
+                    alt="flag"
+                    className="w-100"
+                  />
                 </div>
-                {[...Array(numberOfSeats)].map((y, j) => {
-                  return getSeat(i, j);
+                {match.teamAName}
+              </h5>
+            </div>
+            <div className="col-4">
+              <div className="row justify-content-center align-items-start mb-3">
+                <h3 style={{ fontSize: "50px" }}>
+                  {moment(match?.dateAndTime).format("HH:mm")}
+                  <h6 style={{ fontSize: "20px" }}>{current_date}</h6>
+                </h3>
+              </div>
+              <div
+                className="row justify-content-center align-items-center"
+                style={{ fontSize: "25px" }}
+              >
+                <i className="fas fa-ticket-alt mr-2"></i>
+                {match.stadiumName}
+              </div>
+              <div
+                className="row justify-content-center align-items-center"
+                style={{ fontSize: "25px" }}
+              >
+                <i className="fas fa-flag mr-2"></i>
+                {match.refereeName}
+              </div>
+              <div
+                className="row justify-content-center align-items-center"
+                style={{ fontSize: "25px" }}
+              >
+                <i className="far fa-flag mr-2"></i>
+                {match.linesManAName} <i className="ml-3 far fa-flag mr-2"></i>
+                {match.linesManBName}
+              </div>
+            </div>
+            <div className="col-4">
+              <h5>
+                <div>
+                  <img
+                    src={imageTeamB ? imageTeamB : flag}
+                    alt="flag"
+                    className="w-100"
+                  />
+                </div>
+                {match.teamBName}
+              </h5>
+            </div>
+          </div>
+
+          <div className="row justify-content-center  mt-5">
+            <div className="col-md-9 col-12">
+              {[...Array(match?.stadiumRows)].map((x, i) => {
+                return (
+                  <div className="row justify-content-center">
+                    <div
+                      className={`mr-1 ${
+                        i === 0 ? "d-flex align-items-center" : ""
+                      }`}
+                    >
+                      {i}
+                    </div>
+                    {[...Array(match?.stadiumNumOfSeatsPerRow)].map((y, j) => {
+                      return getSeat(i, j);
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+            <div className="col-md-3 col-12">
+              <div className="row justify-content-between w-100 align-items-center m-0">
+                <p className="mb-0 display-4" style={{ fontSize: "28px" }}>
+                  Tickets:
+                </p>
+                <button
+                  className="btn btn-success"
+                  disabled={seats.length === 0 ? true : false}
+                  onClick={handleOpen}
+                >
+                  Purchase
+                </button>
+                <Modal
+                  open={openPurchase}
+                  onClose={handleClose}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={PurchaseModal}>
+                    <h1 className="text-center mb-2">
+                      You have purchased {seats.length} tickets
+                    </h1>
+                    <div className="row justify-content-center mb-2">
+                      <div className="col-md-12">
+                        <TextField
+                          required
+                          id="filled-required"
+                          label="Card number"
+                          variant="filled"
+                          value={cardNumber}
+                          onChange={(e) => setCardNumber(e.target.value)}
+                          sx={{ width: "100%" }}
+                        />
+                      </div>
+                    </div>
+                    <div className="row justify-content-center mb-2">
+                      <div className="col-md-12">
+                        <TextField
+                          required
+                          id="filled-required"
+                          label="PIN"
+                          variant="filled"
+                          value={cardPin}
+                          onChange={(e) => setCardPin(e.target.value)}
+                          sx={{ width: "100%" }}
+                        />
+                      </div>
+                    </div>
+                    <div className="row justify-content-center mb-2">
+                      <div className="col-md-12">
+                        <Button
+                          variant="outlined"
+                          size="large"
+                          sx={{ width: "100%" }}
+                          onClick={handlePurchase}
+                        >
+                          Purchase
+                        </Button>
+                      </div>
+                    </div>
+                  </Box>
+                </Modal>
+              </div>
+
+              <div className="d-flex flex-wrap mt-2">
+                {seats.map((seat) => {
+                  return (
+                    <div
+                      className="d-flex align-items-center mr-3 mb-3 flex-column justify-content-center"
+                      style={{
+                        background: "#fff",
+                        width: "80px",
+                        height: "80px",
+                        borderRadius: "10px",
+                        boxShadow: "rgba(0, 0, 0, 0.35) 0px 2px 5px",
+                      }}
+                    >
+                      <div className="d-flex justify-content-end w-100 pr-2">
+                        <i
+                          className="fas fa-times"
+                          style={{
+                            color: "red",
+                            fontSize: "1.5vw",
+                            cursor: "pointer",
+                          }}
+                          onClick={cancelSeat.bind(this, seat[0], seat[1])}
+                        ></i>
+                      </div>
+                      <i
+                        className="fas fa-ticket-alt mb-2"
+                        style={{
+                          fontSize: "28px",
+                          color: "green",
+                        }}
+                      ></i>
+                      <p className="mb-0" style={{ fontSize: "15px" }}>
+                        <i className="fas fa-couch mr-2"></i>
+                        {seat[0]}-{seat[1]}
+                      </p>
+                    </div>
+                  );
                 })}
               </div>
-            );
-          })}
-        </div>
-        <div className="col-md-3 col-12">
-          <div className="row justify-content-between w-100 align-items-center m-0">
-            <p className="mb-0 display-4" style={{ fontSize: "28px" }}>
-              Tickets:
-            </p>
-            <button
-              className="btn btn-success"
-              disabled={seats.length === 0 ? true : false}
-              onClick={handleOpen}
-            >
-              Purchase
-            </button>
-            <Modal
-              open={openPurchase}
-              onClose={handleClose}
-              aria-labelledby="modal-modal-title"
-              aria-describedby="modal-modal-description"
-            >
-              <Box sx={PurchaseModal}>
-                <h1 className="text-center mb-2">
-                  You have purchased {seats.length} tickets
-                </h1>
-                <div className="row justify-content-center mb-2">
-                  <div className="col-md-12">
-                    <TextField
-                      required
-                      id="filled-required"
-                      label="Card number"
-                      variant="filled"
-                      value={cardNumber}
-                      onChange={(e) => setCardNumber(e.target.value)}
-                      sx={{ width: "100%" }}
-                    />
-                  </div>
-                </div>
-                <div className="row justify-content-center mb-2">
-                  <div className="col-md-12">
-                    <TextField
-                      required
-                      id="filled-required"
-                      label="PIN"
-                      variant="filled"
-                      value={cardPin}
-                      onChange={(e) => setCardPin(e.target.value)}
-                      sx={{ width: "100%" }}
-                    />
-                  </div>
-                </div>
-                <div className="row justify-content-center mb-2">
-                  <div className="col-md-12">
-                    <Button
-                      variant="outlined"
-                      size="large"
-                      sx={{ width: "100%" }}
-                      onClick={handlePurchase}
-                    >
-                      Purchase
-                    </Button>
-                  </div>
-                </div>
-              </Box>
-            </Modal>
+            </div>
           </div>
-
-          <div className="d-flex flex-wrap mt-2">
-            {seats.map((seat) => {
-              return (
-                <div
-                  className="d-flex align-items-center mr-3 mb-3 flex-column justify-content-center"
-                  style={{
-                    background: "#fff",
-                    width: "80px",
-                    height: "80px",
-                    borderRadius: "10px",
-                    boxShadow: "rgba(0, 0, 0, 0.35) 0px 2px 5px",
-                  }}
-                >
-                  <div className="d-flex justify-content-end w-100 pr-2">
-                    <i
-                      className="fas fa-times"
-                      style={{
-                        color: "red",
-                        fontSize: "1.5vw",
-                        cursor: "pointer",
-                      }}
-                      onClick={cancelSeat.bind(this, seat[0], seat[1])}
-                    ></i>
-                  </div>
-                  <i
-                    className="fas fa-ticket-alt mb-2"
-                    style={{
-                      fontSize: "28px",
-                      color: "green",
-                    }}
-                  ></i>
-                  <p className="mb-0" style={{ fontSize: "15px" }}>
-                    <i className="fas fa-couch mr-2"></i>
-                    {seat[0]}-{seat[1]}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 };

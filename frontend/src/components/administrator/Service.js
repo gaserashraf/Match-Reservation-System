@@ -1,36 +1,14 @@
 import Axios from "axios";
 import apiBaseUrl from "../../config.json";
 import { userMapperTo } from "./mapper";
-export const getNewUsers = (setUsers) => {
+export const getNewUsers = (setUsers,setUserLoading) => {
   let userToken = JSON.parse(localStorage.getItem("user")).access_token;
+  setUserLoading(true);
   Axios({
     method: "GET",
     url: `${apiBaseUrl.apiBaseUrl}/admin/users/new`,
     headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-      Authorization: `Bearer ${userToken}`,
-    },
-  })
-    .then((res) => {
-      let users = res?.data?.response?.users;
-      let usersRet = [];
-      users.forEach((user) => {
-        usersRet.push(userMapperTo(user));
-      });
-      setUsers(usersRet);
-    })
-    .catch((err) => {
-      let res = err?.response?.data?.message;
-      console.log(res);
-    });
-};
-export const getCurrentUsers = (setUsers) => {
-  let userToken = JSON.parse(localStorage.getItem("user")).access_token;
-  Axios({
-    method: "GET",
-    url: `${apiBaseUrl.apiBaseUrl}/admin/users/current`,
-    headers: {
+      "Access-Control-Allow-Origin": "*",
       "Content-Type": "application/json",
       Accept: "application/json",
       Authorization: `Bearer ${userToken}`,
@@ -44,10 +22,41 @@ export const getCurrentUsers = (setUsers) => {
         usersRet.push(userMapperTo(user));
       });
       setUsers(usersRet);
+      setUserLoading(false);
     })
     .catch((err) => {
       let res = err?.response?.data?.message;
       console.log(res);
+      setUserLoading(false);
+    });
+};
+export const getCurrentUsers = (setUsers, setUserLoading) => {
+  let userToken = JSON.parse(localStorage.getItem("user")).access_token;
+  setUserLoading(true);
+  Axios({
+    method: "GET",
+    url: `${apiBaseUrl.apiBaseUrl}/admin/users/current`,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${userToken}`,
+    },
+  })
+    .then((res) => {
+      let users = res?.data?.response?.users;
+      console.log(users);
+      let usersRet = [];
+      users.forEach((user) => {
+        usersRet.push(userMapperTo(user));
+      });
+      setUserLoading(false);
+      setUsers(usersRet);
+    })
+    .catch((err) => {
+      let res = err?.response?.data?.message;
+      console.log(res);
+      setUserLoading(false);
     });
 };
 
@@ -58,6 +67,7 @@ export const handleAccpetNewUser = (user, alertContext, setUsers, users) => {
     method: "PUT",
     url: `${apiBaseUrl.apiBaseUrl}/admin/allow/${username}`,
     headers: {
+      "Access-Control-Allow-Origin": "*",
       "Content-Type": "application/json",
       Accept: "application/json",
       Authorization: `Bearer ${userToken}`,
@@ -81,6 +91,7 @@ export const handelDeleteUser = (user, alertContext, setUsers, users) => {
     method: "DELETE",
     url: `${apiBaseUrl.apiBaseUrl}/admin/delete/${username}`,
     headers: {
+      "Access-Control-Allow-Origin": "*",
       "Content-Type": "application/json",
       Accept: "application/json",
       Authorization: `Bearer ${userToken}`,

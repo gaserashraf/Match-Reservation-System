@@ -3,7 +3,8 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import AddStadiumFrom from "./AddStadiumFrom";
 import StadiumCard from "./StadiumCard";
-import { getAllStaduims } from "./Service";
+import { getAllStadiums } from "./Service";
+import CustomLoading from "../loading/CustomLoading";
 const Stadiums = () => {
   const AddStadiumModal = {
     position: "absolute",
@@ -53,8 +54,9 @@ const Stadiums = () => {
   //   },
   // ];
   const [stadiums, setStadiums] = useState([]);
+  const [stadiumsLoading, setStadiumsLoading] = useState(true);
   useEffect(() => {
-    getAllStaduims(setStadiums);
+    getAllStadiums(setStadiums, setStadiumsLoading);
   }, []);
 
   let user = JSON.parse(localStorage.getItem("user"));
@@ -63,7 +65,7 @@ const Stadiums = () => {
       <h1 className="mb-5 text-left">Stadiums</h1>
       <div className="row justify-content-center mb-2">
         <div className="col-md-12 d-flex flex-wrap justify-content-between">
-          {user.role === "Manager" && (
+          {user?.role === "Manager" && (
             <button className="btn btn-dark" onClick={handleOpen}>
               Add Stadium
             </button>
@@ -85,9 +87,10 @@ const Stadiums = () => {
         </div>
       </div>
       <div className="row mt-2">
+        {stadiumsLoading && <CustomLoading />}
         {stadiums.map((stadium) => {
           return (
-            <div className="col-12 col-md-6 col-lg-4 mb-2">
+            <div className="col-12 col-md-6 col-lg-4 mb-2 d-flex justify-content-center">
               <StadiumCard
                 key={stadium.id}
                 id={stadium.id}

@@ -3,7 +3,6 @@ import apiBaseUrl from "../../config.json";
 import { userMapper, userMapperTo } from "./mapper";
 export const handleRegister = (user, alertContext) => {
   const userObj = userMapper(user);
-
   Axios({
     method: "POST",
     url: `${apiBaseUrl.apiBaseUrl}/register`,
@@ -16,7 +15,7 @@ export const handleRegister = (user, alertContext) => {
     .then(() => {
       console.log("User registered successfully!");
       alertContext.setAlert(
-        "User registered successfully! Please wait for the admin you accept you",
+        "User registered successfully! Please wait for the admin to accept you",
         "success"
       );
     })
@@ -32,12 +31,10 @@ export const handleRegister = (user, alertContext) => {
 };
 
 export const handleLogin = (email, password, alertContext) => {
-  console.log(email, password);
   const userObj = {
     email: email,
     password: password,
   };
-  console.log(userObj);
   Axios({
     method: "POST",
     url: `${apiBaseUrl.apiBaseUrl}/login`,
@@ -45,6 +42,7 @@ export const handleLogin = (email, password, alertContext) => {
       "Content-Type": "application/json",
       Accept: "application/json",
     },
+
     data: userObj,
   })
     .then((res) => {
@@ -68,7 +66,7 @@ export const handleLogin = (email, password, alertContext) => {
       let res = err?.response?.data?.meta?.msg;
       console.log(res);
       if (res === undefined) {
-        alertContext.setAlert("Error registering user", "error");
+        alertContext.setAlert("Error in login", "error");
       } else {
         alertContext.setAlert(res, "error");
       }
@@ -78,6 +76,10 @@ export const handleLogin = (email, password, alertContext) => {
 export const handleUpdateProfile = (user, alertContext) => {
   const userObj = userMapper(user);
   let userToken = JSON.parse(localStorage.getItem("user")).access_token;
+  console.log(userObj);
+  console.log(user);
+  console.log(userToken);
+  console.log("update profile");
   Axios({
     method: "PUT",
     url: `${apiBaseUrl.apiBaseUrl}/update/profile`,
@@ -88,7 +90,11 @@ export const handleUpdateProfile = (user, alertContext) => {
     },
     data: userObj,
   })
-    .then(() => {
+    .then((res) => {
+      let user = res.data.response;
+      console.log(res);
+      user = userMapperTo(user);
+      localStorage.setItem("user", JSON.stringify(user));
       console.log("User update profile successfully!");
       alertContext.setAlert("User update profile successfully!", "success");
     })

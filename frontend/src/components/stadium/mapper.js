@@ -8,6 +8,7 @@ export const stadiumMapper = (stadium) => {
 };
 export const stadiumMapperTo = (stadium) => {
   let stadiumRet = {
+    id: stadium.stadium_id,
     name: stadium.stadium_name,
     rows: parseInt(stadium.number_of_rows),
     seatsPerRow: parseInt(stadium.number_of_seats_per_row),

@@ -12,6 +12,6 @@
 .App {
   background-image: url("./assets/images/bg1.jpg") ;
   background-size: cover;
-  height: 100vh;
+  min-height: 100vh;
   color: black;
 }

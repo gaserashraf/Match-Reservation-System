@@ -32,7 +32,8 @@ export const handleAddStadium = (
     });
 };
 
-export const getAllStaduims = (setStadiums) => {
+export const getAllStadiums = (setStadiums,setStadiumsLoading) => {
+  setStadiumsLoading(true);
   Axios({
     method: "GET",
     url: `${apiBaseUrl.apiBaseUrl}/stadium/all`,
@@ -42,16 +43,18 @@ export const getAllStaduims = (setStadiums) => {
     },
   })
     .then((res) => {
-      console.log(res);
-      let stadiums = res?.data?.response?.users;
+      let stadiums = res?.data?.response?.Stadiums;
       let stadiumsRet = [];
       stadiums.forEach((stadium) => {
         stadiumsRet.push(stadiumMapperTo(stadium));
       });
       setStadiums(stadiumsRet);
+      setStadiumsLoading(false);
     })
     .catch((err) => {
       let res = err?.response?.data?.message;
       console.log(res);
+      setStadiumsLoading(false);
     });
 };
+
