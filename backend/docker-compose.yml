@@ -1,0 +1,52 @@
+version: '3.1'
+services:
+
+  # Postgresql Service -- the sql container
+  db:
+    image: postgres
+    container_name: pgsql
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+      
+  # Adminer is a good way 
+  # to see the sql tables in developent
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - "${ADMINER_PORT}:8080"
+
+  # FTP Apache Service -- to simulate uploading files to external place
+  # apache-ftpd:
+  #   build:
+  #     context: .
+  #     dockerfile: ./ftp_apache.dockerfile
+  #   container_name: apache-ftpd
+  #   restart: unless-stopped
+  #   ports:
+  #     - "${APACHE_MEDIA_PORT}:80"
+  #   environment:
+  #     FTP_USER_NAME: ${FTP_USER_NAME}
+  #     FTP_USER_PASS: ${FTP_USER_PASS}
+  #     FTP_USER_HOME: /var/www/html
+  #   volumes:
+  #     - './ftp/data:/var/www/html'
+  #     - './ftp/pass:/etc/pure-ftpd/passwd'
+
+  # PHP Service
+  php-apache:
+    build:
+      context: .
+      dockerfile: ./backend.dockerfile
+    container_name: php-apache
+    restart: unless-stopped
+    depends_on:
+      - db
+      # - apache-ftpd
+    ports:
+      - "${APP_PORT}:8181"
