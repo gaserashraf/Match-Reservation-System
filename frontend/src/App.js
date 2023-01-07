@@ -15,7 +15,7 @@ import RequireAuth from "./routing/ProtectedRoutes";
 import Stadiums from "./components/stadium/Stadiums";
 import Matches from "./components/match/Matches";
 import Match from "./components/match/Match";
-import Tickets from "./components/ticket/Tickets";
+import Tickets from "./components/Ticket/Tickets";
 import Teams from "./components/teams/Teams";
 import Referees from "./components/referees/Referees";
 import "./index.css";

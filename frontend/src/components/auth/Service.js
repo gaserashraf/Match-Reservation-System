@@ -93,7 +93,10 @@ export const handleUpdateProfile = (user, alertContext) => {
     .then((res) => {
       let user = res.data.response;
       console.log(res);
+      let oldToken = JSON.parse(localStorage.getItem("user")).access_token;
+
       user = userMapperTo(user);
+      user.access_token=oldToken;
       localStorage.setItem("user", JSON.stringify(user));
       console.log("User update profile successfully!");
       alertContext.setAlert("User update profile successfully!", "success");

@@ -7,7 +7,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { AlertContext } from "../../contexts/AlertContext";
 import { getMatch, getReservedSeatsOfMatch } from "./Service";
-import { buyTicket } from "../ticket/Service";
+import { buyTicket } from "../Ticket/Service";
 import moment from "moment";
 import CustomLoading from "../loading/CustomLoading";
 const Match = () => {
