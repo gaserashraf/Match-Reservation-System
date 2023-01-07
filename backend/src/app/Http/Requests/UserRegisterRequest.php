@@ -37,7 +37,7 @@ class UserRegisterRequest extends FormRequest
       'first_name' => 'required|regex:/^[a-zA-Z-]+$/u',
       'last_name' => 'required|regex:/^[a-zA-Z-]+$/u',
       'gender' => 'required|boolean',
-      'birth_date' => 'required|date',
+      'birth_date' => 'required|date|before:today',
 
       // TODO: whether to adjust nationality to be part of pre-defined array or not?
       'nationality' => 'required|regex:/^[a-zA-Z-]+$/u',

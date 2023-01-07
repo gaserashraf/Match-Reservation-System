@@ -63,7 +63,7 @@ class MatchTicketsService
         return false;
       }
       // the customer can cancel the ticket only 3 days before the match date
-      if (strtotime($match_ticket->match->match_date) - strtotime(date('Y-m-d')) < 3 * 24 * 60 * 60) {
+      if (strtotime($match_ticket->match->date) - strtotime(date('Y-m-d')) < 3 * 24 * 60 * 60) {
         return false;
       }
       $match_ticket->delete();

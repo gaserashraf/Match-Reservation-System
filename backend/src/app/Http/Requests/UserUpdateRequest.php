@@ -30,7 +30,7 @@ class UserUpdateRequest extends FormRequest
       'first_name' => 'sometimes|regex:/^[a-zA-Z-]+$/u',
       'last_name' => 'sometimes|regex:/^[a-zA-Z-]+$/u',
       'gender' => 'sometimes|boolean',
-      'birth_date' => 'sometimes|date',
+      'birth_date' => 'sometimes|date|before:today',
 
       'nationality' => 'sometimes|regex:/^[a-zA-Z-]+$/u',
 
