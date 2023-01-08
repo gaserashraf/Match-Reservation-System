@@ -51,8 +51,6 @@ World Cup Qatar 2022
 - [x] F13: The guest can log in as an existing account.
 - [x] F14: The guest can view matches details (whether signed in or not but can not reserve any).
 
-💻 Built With
-
 ## 🏁 Get Started <a name = "install"></a>
 
 1. **Clone the repository**
